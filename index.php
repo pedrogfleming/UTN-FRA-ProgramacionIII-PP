@@ -95,6 +95,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     HttpStatusCodes::SendResponse($bookingRoom, $statusCode);
                 }
                 break;
+            case 'GetBookings':
+                if (
+                    isset($_POST['roomType']) &&
+                    isset($_POST["dateFrom"]) &&
+                    isset($_POST["dateTo"])
+                ) {
+                    $dto = new stdClass;
+                    $dto->roomType = $_POST["roomType"];
+                    $dto->dateFrom = $_POST["dateFrom"];
+                    $dto->dateTo = $_POST["dateTo"];
+                    if(isset($_POST["clientId"])){
+                        $dto->clientId = $_POST["clientId"];
+                    }
+                    
+
+                    $roomController = new RoomController();
+                    $response = $roomController->Get($dto);
+
+                    $statusCode = HttpStatusCodes::OK;
+                    if(isset($response->err )|| count($response->bookings) < 1){
+                        $statusCode = HttpStatusCodes::NOT_FOUND;
+                    }
+                    HttpStatusCodes::SendResponse($response, $statusCode);
+                }
+                break;
             default:
                 echo json_encode(['error' => 'Accion no valida']);
                 break;

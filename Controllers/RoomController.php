@@ -14,9 +14,11 @@ class RoomController
         }
     }
 
-    public function Get($dto)
+    public function Get($searchCriteria)
     {
         try {
+            $customerBooking = new CustomerBooking();
+            return $customerBooking->Get($searchCriteria);
         } catch (\Throwable $th) {
             $response = new stdClass();
             $response->err = $th->getMessage();

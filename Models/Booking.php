@@ -103,14 +103,13 @@ class Booking implements \JsonSerializable
     public static function AreEqual($a, $b)
     {
         return $a->getBookingId() == $b->getBookingId() ||
-        (
-            $a->getClientType() == $b->getClientType() &&
-            $a->getCheckIn() == $b->getCheckIn() &&
-            $a->getCheckOut() == $b->getCheckOut() &&
-            $a->getRoomType() == $b->getRoomType() &&
-            $a->getTotalBookingAmount() == $b->getTotalBookingAmount() &&
-            $a->getClientId() == $b->getClientId()
-        );
+            ($a->getClientType() == $b->getClientType() &&
+                $a->getCheckIn() == $b->getCheckIn() &&
+                $a->getCheckOut() == $b->getCheckOut() &&
+                $a->getRoomType() == $b->getRoomType() &&
+                $a->getTotalBookingAmount() == $b->getTotalBookingAmount() &&
+                $a->getClientId() == $b->getClientId()
+            );
     }
 
     public static function map($arr)
@@ -121,10 +120,10 @@ class Booking implements \JsonSerializable
             $newBooking = new Booking(
                 $obj->clientType,
                 $obj->clientId,
-                $obj->checkIn,
-                $obj->checkOut,
+                DateTime::createFromFormat('Y-m-d', $obj->checkIn),
+                DateTime::createFromFormat('Y-m-d', $obj->checkOut),
                 $obj->roomType,
-                $obj->totalBookingAmount
+                intval($obj->totalBookingAmount)
             );
             $newBooking->setBookingId($obj->bookingId);
             array_push($ret_arr, $newBooking);

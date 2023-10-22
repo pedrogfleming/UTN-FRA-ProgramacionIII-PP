@@ -13,34 +13,49 @@ class CustomerBooking
         $this->_bookingRepository = new BookingRepository();
         $this->_clientRepository = new ClientRepository();
     }
-    public function Get($clientDTO)
+    public function Get($searchCriteria)
     {
         $ret = new stdClass();
-        $clients = $this->_clientRepository->Get();
+        $bookings = $this->_bookingRepository->Get();
 
-        $ids = array_filter($clients, function ($obj) use ($clientDTO) {
-            return $obj->getId() == $clientDTO->clientId;
+        // Filter by client
+        if (isset($searchCriteria->clientId)) {
+            $bookings = array_filter($bookings, function ($obj) use ($searchCriteria) {
+                return $obj->getClientId() == $searchCriteria->clientId;
+            });
+            $bookings = array_values($bookings);
+        }
+
+        // Filter by room type
+        if ($searchCriteria->roomType != "Todos") {
+            $bookings = array_filter($bookings, function ($obj) use ($searchCriteria) {
+                return $obj->getRoomType() == $searchCriteria->roomType;
+            });
+            $bookings = array_values($bookings);
+        }
+
+        // Filter by range of dates (%%% means wildcard, doestn matter the date)
+        if($searchCriteria->dateFrom !== "%%%" || $searchCriteria->dateTo !== "%%%"){
+            $bookings = array_filter($bookings, function ($obj) use ($searchCriteria) {
+                return $obj->getCheckIn() >= DateTime::createFromFormat('Y-m-d', $searchCriteria->dateFrom) &&
+                    $obj->getCheckOut() <= DateTime::createFromFormat('Y-m-d', $searchCriteria->dateTo);
+            });
+            $bookings = array_values($bookings);
+        }
+
+        $totalBookingAmount = array_reduce($bookings, function ($carry, $b) {
+            return $carry + $b->getTotalBookingAmount();
+        }, 0);
+
+
+        // order by checkin date
+        usort($bookings, function ($a, $b) {
+            return $a->getCheckIn() > $b->getCheckIn();
         });
 
-        if (count($ids) > 0) {
-            $foundedClient = array_filter($ids, function ($obj) use ($clientDTO) {
-                return $obj->getClientType() == $clientDTO->clientType;
-            });
+        $ret->bookings = $bookings;
+        $ret->totalBookingAmount = $totalBookingAmount;
 
-            if (count($foundedClient) > 0) {
-                $foundedClient = array_values($foundedClient);
-                $ret = (object) array(
-                    'country' => $foundedClient[0]->getCountry(),
-                    'city' => $foundedClient[0]->getCity(),
-                    'phone' => $foundedClient[0]->getPhoneNumber()
-                );
-                return $ret;
-            } else {
-                $ret->err = "Client type incorrect";
-            }
-        } else {
-            $ret->err = "Number and type of client are incorrect";
-        }
         return $ret;
     }
 
@@ -62,7 +77,7 @@ class CustomerBooking
                 $createdBooking =  $this->_bookingRepository->Create($booking);
                 if (!empty($createdBooking)) {
                     $fileName = $createdBooking->getBookingId() . $createdBooking->getClientType() . $createdBooking->getClientId();
-                    $statusImageUpload=$this->UploadImage($fileName);
+                    $statusImageUpload = $this->UploadImage($fileName);
                     if ($statusImageUpload->success) {
                         return $createdBooking;
                     } else {
