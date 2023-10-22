@@ -1,5 +1,6 @@
 <?php
 require_once("filesManager.php");
+require_once("./Models/Client.php");
 class ClientRepository
 {
     private $_fileName;
@@ -13,8 +14,6 @@ class ClientRepository
     }
     public function Create($c)
     {
-        require_once("./Models/Client.php");
-
         if (file_exists($this->_fileName)) {
             $clients = $this->_fileManager->ReadJSON($this->_fileName);
             if (!empty($clients)) {
@@ -72,6 +71,17 @@ class ClientRepository
         foreach ($arr as $client) {
             if ($client->getId() == $needle) {
                 return $client;
+            }
+        }
+        return false;
+    }
+
+    public function ClientExist($c)
+    {
+        $clients = $this->Get();
+        foreach ($clients as $client) {
+            if (Client::AreEqual($client, $c)) {
+                return true;
             }
         }
         return false;

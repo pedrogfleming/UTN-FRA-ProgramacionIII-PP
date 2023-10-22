@@ -1,42 +1,64 @@
 <?php
 class filesManager
 {
-    function ReadJSON($fileName = ''){
+    // function ReadJSON($fileName = ''){
+    //     $arrayJSON = [];
+
+    //     if(!empty($fileName)){            
+    //         if(file_exists($fileName)){
+
+    //             $file = fopen($fileName,'r');
+    //             $fSize = filesize($fileName);
+
+    //             if ($fSize > 0) {
+    //                 $fread = fread($file,$fSize);
+    //             } else {
+    //                 $fread = '{}';
+    //             }
+    //             fclose($file);
+    //             $arrayJSON = json_decode($fread);
+    //         }
+    //         else{
+    //             throw new Exception('File does not exist');
+    //         }
+    //     return $arrayJSON;
+    //     }
+    // }
+
+    function ReadJSON($fileName = '')
+    {
         $arrayJSON = [];
-    
-        if(!empty($fileName)){            
-            if(file_exists($fileName)){
-                
-                $file = fopen($fileName,'r');
-                $fSize = filesize($fileName);
-    
-                if ($fSize > 0) {
-                    $fread = fread($file,$fSize);
+
+        if (!empty($fileName)) {
+            if (file_exists($fileName)) {
+                $fread = file_get_contents($fileName); // Read the entire file content
+                if ($fread !== false) {
+                    $arrayJSON = json_decode($fread); // Decoding JSON into an associative array
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        throw new Exception('JSON decoding error: ' . json_last_error_msg());
+                    }
                 } else {
-                    $fread = '{}';
+                    throw new Exception('Failed to read file content');
                 }
-                fclose($file);
-                $arrayJSON = json_decode($fread);
-            }
-            else{
+            } else {
                 throw new Exception('File does not exist');
             }
-        return $arrayJSON;
         }
-    }    
-    
-    function SaveJSON($fileName = '',$arrayObj = null){
-        if(!empty($fileName)){
-            if($arrayObj !== null){
-                $file = fopen($fileName,'w');
-                fwrite($file,json_encode($arrayObj));
+
+        return $arrayJSON;
+    }
+
+    function SaveJSON($fileName = '', $arrayObj = null)
+    {
+        if (!empty($fileName)) {
+            if ($arrayObj !== null) {
+                $file = fopen($fileName, 'w');
+                fwrite($file, json_encode($arrayObj));
                 fclose($file);
                 return true;
             }
-        }else{
+        } else {
             throw new Exception('Filename cant be empty');
         }
     }
 }
-
-

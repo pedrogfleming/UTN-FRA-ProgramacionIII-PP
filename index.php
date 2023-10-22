@@ -1,6 +1,7 @@
 <?php
 require_once("./Controllers/ClientController.php");
 require_once("./Helpers/statusCodeHelper.php");
+require_once("./Controllers/RoomController.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['action'])) {
@@ -38,24 +39,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                     $clientController = new ClientController();
                     $createdClient = $clientController->Create($dto);
-                    
-                    HttpStatusCodes::SendResponse($createdClient, HttpStatusCodes::OK);
+
+                    $statusCode = HttpStatusCodes::CREATED;
+                    if(isset($createdClient->err)){
+                        $statusCode = HttpStatusCodes::UNPROCESSABLE_ENTITY;
+                    }
+                    HttpStatusCodes::SendResponse($createdClient, $statusCode);
                 }
                 break;
                 // 2
             case 'GetClient':
                 if (
-                    isset($_POST['id']) &&
+                    isset($_POST['clientId']) &&
                     isset($_POST["clientType"])
                 ) {
                     $dto = new stdClass;
-                    $dto->id = $_POST["id"];
+                    $dto->clientId = $_POST["clientId"];
                     $dto->clientType = $_POST["clientType"];
 
                     $clientController = new ClientController();
                     $foundedClient = $clientController->Get($dto);
-                    
-                    HttpStatusCodes::SendResponse($foundedClient, HttpStatusCodes::OK);
+
+                    $statusCode = HttpStatusCodes::OK;
+                    if(isset($foundedClient->err)){
+                        $statusCode = HttpStatusCodes::NOT_FOUND;
+                    }
+                    HttpStatusCodes::SendResponse($foundedClient, $statusCode);
+                }
+                break;
+                // 3
+            case 'BookRoom':
+                if (
+                    isset($_POST["clientType"]) &&
+                    isset($_POST["clientId"]) &&
+                    isset($_POST["checkIn"]) && 
+                    isset($_POST["checkOut"]) && 
+                    isset($_POST["roomType"]) && 
+                    isset($_POST["totalBookingAmount"])
+                ) {
+                    $dto = new stdClass;
+                    $dto->clientType = $_POST["clientType"];
+                    $dto->clientId = $_POST["clientId"];
+                    $dto->checkIn = $_POST["checkIn"];
+                    $dto->checkOut = $_POST["checkOut"];
+                    $dto->roomType = $_POST["roomType"];
+                    $dto->totalBookingAmount = $_POST["totalBookingAmount"];
+
+                    $bookingController = new RoomController();
+                    $bookingRoom = $bookingController->Book($dto);
+
+                    $statusCode = HttpStatusCodes::CREATED;
+                    if(isset($bookingRoom->err)){
+                        $statusCode = HttpStatusCodes::UNPROCESSABLE_ENTITY;
+                    }
+                    HttpStatusCodes::SendResponse($bookingRoom, $statusCode);
                 }
                 break;
             default:

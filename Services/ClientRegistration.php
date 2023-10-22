@@ -12,15 +12,16 @@ class ClientRegistration
         require_once("./Models/Client.php");
         if (isset($clientDTO)) {
             $newClient = new Client($clientDTO->name, $clientDTO->lastName, $clientDTO->documentType, $clientDTO->documentNumber, $clientDTO->email, $clientDTO->clientType, $clientDTO->country, $clientDTO->city, $clientDTO->phoneNumber);
-            if (!$this->ClientExist($newClient)) {
+            if (!$this->_clientRepository->ClientExist($newClient)) {
                 $createdClient =  $this->_clientRepository->Create($newClient);
                 if (!empty($createdClient)) {
                     $fileName = $createdClient->getId() . $createdClient->getClientType();
-                    if ($this->UploadImage($fileName)->success) {
+                    $statusImageUpload = $this->UploadImage($fileName);
+                    if ($statusImageUpload->success) {
                         return $createdClient;
                     } else {
                         // TODO change exception for ret object with errors
-                        throw new Exception('Unable to upload image for client');
+                        throw new Exception('Unable to upload image for client: ' . $statusImageUpload->err);
                     }
                 }
             } else {
@@ -54,16 +55,5 @@ class ClientRegistration
             }
         }
         return $ret;
-    }
-
-    private function ClientExist($c)
-    {
-        $clients = $this->_clientRepository->Get();
-        foreach ($clients as $client) {
-            if (Client::AreEqual($client, $c)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
