@@ -6,6 +6,31 @@ require_once("./Controllers/RoomController.php");
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['action'])) {
         switch ($_GET['action']) {
+            case 'GetBookings':
+                if (
+                    isset($_GET['roomType']) &&
+                    isset($_GET["dateFrom"]) &&
+                    isset($_GET["dateTo"])
+                ) {
+                    $dto = new stdClass;
+                    $dto->roomType = $_GET["roomType"];
+                    $dto->dateFrom = $_GET["dateFrom"];
+                    $dto->dateTo = $_GET["dateTo"];
+                    if(isset($_GET["clientId"])){
+                        $dto->clientId = $_GET["clientId"];
+                    }
+                    
+
+                    $roomController = new RoomController();
+                    $response = $roomController->Get($dto);
+
+                    $statusCode = HttpStatusCodes::OK;
+                    if(isset($response->err )|| count($response->bookings) < 1){
+                        $statusCode = HttpStatusCodes::NOT_FOUND;
+                    }
+                    HttpStatusCodes::SendResponse($response, $statusCode);
+                }
+                break;
         }
     } else {
         echo json_encode(['error' => 'Falta el parametro action']);
@@ -95,31 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     HttpStatusCodes::SendResponse($bookingRoom, $statusCode);
                 }
                 break;
-            case 'GetBookings':
-                if (
-                    isset($_POST['roomType']) &&
-                    isset($_POST["dateFrom"]) &&
-                    isset($_POST["dateTo"])
-                ) {
-                    $dto = new stdClass;
-                    $dto->roomType = $_POST["roomType"];
-                    $dto->dateFrom = $_POST["dateFrom"];
-                    $dto->dateTo = $_POST["dateTo"];
-                    if(isset($_POST["clientId"])){
-                        $dto->clientId = $_POST["clientId"];
-                    }
-                    
 
-                    $roomController = new RoomController();
-                    $response = $roomController->Get($dto);
-
-                    $statusCode = HttpStatusCodes::OK;
-                    if(isset($response->err )|| count($response->bookings) < 1){
-                        $statusCode = HttpStatusCodes::NOT_FOUND;
-                    }
-                    HttpStatusCodes::SendResponse($response, $statusCode);
-                }
-                break;
             default:
                 echo json_encode(['error' => 'Accion no valida']);
                 break;
