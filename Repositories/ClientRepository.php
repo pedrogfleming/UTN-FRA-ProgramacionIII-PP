@@ -10,7 +10,7 @@ class ClientRepository
     public function __construct()
     {
         $this->_fileName = "./hoteles.json";
-        $this->_fileManager = new filesManager(); 
+        $this->_fileManager = new filesManager();
     }
     public function Create($c)
     {
@@ -28,11 +28,10 @@ class ClientRepository
         } else {
             $c->SetId($this->_base_id);
             $clients[0] = $c;
-            if($this->_fileManager->SaveJSON($this->_fileName, $clients)){
+            if ($this->_fileManager->SaveJSON($this->_fileName, $clients)) {
                 $ret = $this->Get($c->GetId());
                 return $ret;
-            }
-            else{
+            } else {
                 throw new Exception("Unable to register the client");
             }
         }
@@ -40,16 +39,50 @@ class ClientRepository
 
     public function Get($id = null)
     {
+        $notFound =  array();
         if (file_exists($this->_fileName)) {
-            $clients = Client::map($this->_fileManager->ReadJSON($this->_fileName));
+            $allClients = Client::map($this->_fileManager->ReadJSON($this->_fileName));
             if (isset($id)) {
-                return $this->SearchById($clients, $id);
+                $foundedClient[0] = $this->SearchById($allClients, $id);
+                if ($foundedClient[0] !== false) {
+                    return $foundedClient;
+                } else {
+                    return $notFound;
+                }
             } else {
-                return $clients;
+                return $allClients;
             }
         } else {
-            return array();
+            return $notFound;
         }
+    }
+
+    public function Update($client)
+    {
+        $newListClientModified = ClientRepository::Arr_Update($this->Get(), $client);
+        if ($newListClientModified !== false && count($newListClientModified) > 0) {
+            if ($this->_fileManager->SaveJSON($this->_fileName, $newListClientModified)) {
+                return $this->Get($client->getId());
+            } else {
+                throw new Exception("Unable to modify the client");
+            }
+        } else {
+            throw new Exception("Client not found");
+        }
+    }
+
+    private static function Arr_Update($clients, $client)
+    {
+        for ($i = 0; $i < count($clients); $i++) {
+            if (
+                $clients[$i]->getId() == $client->getId() &&
+                $clients[$i]->getClientType() == $client->getClientType()
+            ) {
+                $clients[$i] = $client;
+                return $clients;
+            }
+        }
+        return false;
     }
 
     private static function GetNextId($arr)

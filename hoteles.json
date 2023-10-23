@@ -4,7 +4,7 @@
         "name": "Moria",
         "lastName": "Casan",
         "documentType": "Dni",
-        "documentNumber": "000000010",
+        "documentNumber": "0000000001",
         "email": "momo-casan@example.com",
         "clientType": "Coorporativo",
         "country": "Paraguay",
@@ -22,5 +22,29 @@
         "country": "Argentina",
         "city": "Buenos Aires",
         "phoneNumber": "+541112348081"
+    },
+    {
+        "id": "1000003",
+        "name": "Marcelo",
+        "lastName": "Tinelli",
+        "documentType": "Dni",
+        "documentNumber": "000000030",
+        "email": "marcelo-tinelli@example.com",
+        "clientType": "Coorporativo",
+        "country": "Argentina",
+        "city": "Buenos Aires",
+        "phoneNumber": "+541112348082"
+    },
+    {
+        "id": "1000004",
+        "name": "Susana",
+        "lastName": "Gimenez",
+        "documentType": "Dni",
+        "documentNumber": "000000040",
+        "email": "susan-gimenez@example.com",
+        "clientType": "Coorporativo",
+        "country": "Argentina",
+        "city": "Buenos Aires",
+        "phoneNumber": "+541112348083"
     }
 ]

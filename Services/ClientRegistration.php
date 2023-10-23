@@ -7,7 +7,7 @@ class ClientRegistration
     {
         $this->_clientRepository = new ClientRepository();
     }
-    function RegisterClient($clientDTO)
+    public function RegisterClient($clientDTO)
     {
         require_once("./Models/Client.php");
         if (isset($clientDTO)) {
@@ -30,7 +30,7 @@ class ClientRegistration
         }
     }
 
-    function UploadImage($file_name)
+    public function UploadImage($file_name)
     {
         $ret = new stdClass;
         // The folder must be created before

@@ -19,7 +19,7 @@
     },
     {
         "bookingId": "3",
-        "clientType": "Individual",
+        "clientType": "Coorporativo",
         "clientId": "1000003",
         "checkIn": "2023-12-01",
         "checkOut": "2023-12-05",
