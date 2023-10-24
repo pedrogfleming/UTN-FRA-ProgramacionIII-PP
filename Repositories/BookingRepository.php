@@ -48,6 +48,9 @@ class BookingRepository
                 if ($targetBooking !== false) {
                     return $targetBooking;
                 }
+                else{
+                    throw new Exception("Booking not found");
+                }
             } else {
                 return $bookings;
             }

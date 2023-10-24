@@ -14,15 +14,17 @@ class ClientRegistration
             $newClient = new Client($clientDTO->name, $clientDTO->lastName, $clientDTO->documentType, $clientDTO->documentNumber, $clientDTO->email, $clientDTO->clientType, $clientDTO->country, $clientDTO->city, $clientDTO->phoneNumber);
             if (!$this->_clientRepository->ClientExist($newClient)) {
                 $createdClient =  $this->_clientRepository->Create($newClient);
-                if (!empty($createdClient)) {
-                    $fileName = $createdClient->getId() . $createdClient->getClientType();
+                if (!empty($createdClient) && isset($createdClient[0])) {
+                    $fileName = $createdClient[0]->getId() . $createdClient[0]->getClientType();
                     $statusImageUpload = $this->UploadImage($fileName);
                     if ($statusImageUpload->success) {
                         return $createdClient;
                     } else {
-                        // TODO change exception for ret object with errors
                         throw new Exception('Unable to upload image for client: ' . $statusImageUpload->err);
                     }
+                }
+                else{
+                    throw new Exception('Unable to register the new client: unepexted error');
                 }
             } else {
                 throw new Exception('Unable to register the new client: client already exist');

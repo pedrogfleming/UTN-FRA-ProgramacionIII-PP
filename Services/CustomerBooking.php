@@ -101,7 +101,7 @@ class CustomerBooking
                 $targetBooking = $this->_bookingRepository->Get($dto->bookingId);
                 if ($targetBooking !== false) {
                     $targetBooking->setStatus('Cancelled');
-                    $this->_bookingRepository->Update($dto->clientId, $targetBooking);
+                    return $this->_bookingRepository->Update($dto->clientId, $targetBooking);
                 } else {
                     throw new Exception('Unable to modify booking status: Booking id does not exist');
                 }
@@ -114,9 +114,9 @@ class CustomerBooking
     public function UpdateAmount($dto)
     {
         $booking = $this->_bookingRepository->Get($dto->bookingId);
-        if (empty($booking) && count($booking) == 1) {
+        if (!empty($booking) && is_object($booking)) {
             $booking->setStatus('Modificada');
-            $booking->setTotalBookingAmount($dto->amountToAdjust);
+            $booking->setTotalBookingAmount(intval($dto->amountToAdjust));
             $modifiedBooking = $this->_bookingRepository->Update($dto->bookingId, $booking);
             if (is_object($modifiedBooking) && $modifiedBooking->getBookingId() === $dto->bookingId) {
                 $bookingChange = new BookingChange(
@@ -124,7 +124,7 @@ class CustomerBooking
                     $dto->clientType,
                     $dto->bookingId,
                     $dto->adjustmentReason,
-                    $dto->amountToAdjust
+                    intval($dto->amountToAdjust)
                 );
                 return $this->_historyAdjustmentRepository->Create($bookingChange);
             }

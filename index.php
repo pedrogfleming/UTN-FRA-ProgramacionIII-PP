@@ -7,17 +7,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['action'])) {
         switch ($_GET['action']) {
                 // 4
-                // TODO si no se pasa fecha, se devuelve las del dia anterior
             case 'GetBookings':
                 if (
-                    isset($_GET['roomType']) &&
-                    isset($_GET["dateFrom"]) &&
-                    isset($_GET["dateTo"])
+                    isset($_GET['roomType'])
                 ) {
                     $dto = new stdClass;
+                    if (
+                        isset($_GET["dateFrom"]) &&
+                        isset($_GET["dateTo"])
+                    ) {
+                        $dto->dateFrom = $_GET["dateFrom"];
+                        $dto->dateTo = $_GET["dateTo"];
+                    } else {
+                        $yesterday = new DateTime('yesterday');
+                        $yesterdayFormatted = $yesterday->format('Y-m-d');
+                        $dto->dateFrom = $yesterday;
+                        $dto->dateTo = $yesterday ;
+                    }
                     $dto->roomType = $_GET["roomType"];
-                    $dto->dateFrom = $_GET["dateFrom"];
-                    $dto->dateTo = $_GET["dateTo"];
+
                     if (isset($_GET["clientId"])) {
                         $dto->clientId = $_GET["clientId"];
                     }
@@ -159,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 break;
                 // 7
-            case 'UpdateBooking':
+            case 'AdjustBookingAmount':
                 if (
                     isset($_POST["clientId"]) &&
                     isset($_POST["clientType"]) &&

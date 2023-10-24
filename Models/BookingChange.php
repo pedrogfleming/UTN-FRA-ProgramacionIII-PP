@@ -1,20 +1,20 @@
 <?php
 class BookingChange implements \JsonSerializable
 {
-    private $_id;
-    private $_clientId;
-    private $_clientType;
-    private $_bookingId;
-    private $_adjustmentReason;
-    private $_amountToAdjust;
+    private $id;
+    private $clientId;
+    private $clientType;
+    private $bookingId;
+    private $adjustmentReason;
+    private $amountToAdjust;
 
     public function __construct($clientId, $clientType, $bookingId, $adjustmentReason, $amountToAdjust)
     {
-        $this->_clientId = $clientId;
-        $this->_clientType = $clientType;
-        $this->_bookingId = $bookingId;
-        $this->_adjustmentReason = $adjustmentReason;
-        $this->_amountToAdjust = $amountToAdjust;
+        $this->clientId = $clientId;
+        $this->clientType = $clientType;
+        $this->bookingId = $bookingId;
+        $this->adjustmentReason = $adjustmentReason;
+        $this->amountToAdjust = $amountToAdjust;
     }
 
     public function jsonSerialize()
@@ -24,62 +24,62 @@ class BookingChange implements \JsonSerializable
 
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     public function setId($id)
     {
-        $this->_id = $id;
+        $this->id = $id;
     }
 
     public function getClientId()
     {
-        return $this->_clientId;
+        return $this->clientId;
     }
 
     public function setClientId($clientId)
     {
-        $this->_clientId = $clientId;
+        $this->clientId = $clientId;
     }
 
     public function getClientType()
     {
-        return $this->_clientType;
+        return $this->clientType;
     }
 
     public function setClientType($clientType)
     {
-        $this->_clientType = $clientType;
+        $this->clientType = $clientType;
     }
 
     public function getBookingId()
     {
-        return $this->_bookingId;
+        return $this->bookingId;
     }
 
     public function setBookingId($bookingId)
     {
-        $this->_bookingId = $bookingId;
+        $this->bookingId = $bookingId;
     }
 
     public function getAdjustmentReason()
     {
-        return $this->_adjustmentReason;
+        return $this->adjustmentReason;
     }
 
     public function setAdjustmentReason($adjustmentReason)
     {
-        $this->_adjustmentReason = $adjustmentReason;
+        $this->adjustmentReason = $adjustmentReason;
     }
 
     public function getAmountToAdjust()
     {
-        return $this->_amountToAdjust;
+        return $this->amountToAdjust;
     }
 
     public function setAmountToAdjust($amountToAdjust)
     {
-        $this->_amountToAdjust = $amountToAdjust;
+        $this->amountToAdjust = $amountToAdjust;
     }
 
     public static function map($arr)
