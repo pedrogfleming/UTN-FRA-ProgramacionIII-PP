@@ -2302,6 +2302,395 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Eliminar Cliente",
+			"item": [
+				{
+					"name": "9-Eliminar Cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000001231\",\r\n    \"clientType\": \"Coorporativo\"\r\n}"
+						},
+						"url": {
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"protocol": "{{protocolo}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"{{path}}",
+								"index.php"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "9 - Eliminar Cliente - Ok",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000001\",\r\n    \"clientType\": \"Coorporativo\"\r\n}"
+								},
+								"url": {
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+									"protocol": "{{protocolo}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{puerto}}",
+									"path": [
+										"{{path}}",
+										"index.php"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 24 Oct 2023 23:09:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.56 (Win64) OpenSSL/1.1.1t PHP/8.2.4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Content-Length",
+									"value": "6"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    true\n]"
+						},
+						{
+							"name": "9 - Eliminar Cliente - Cliente no encontrado",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000001231\",\r\n    \"clientType\": \"Coorporativo\"\r\n}"
+								},
+								"url": {
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+									"protocol": "{{protocolo}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{puerto}}",
+									"path": [
+										"{{path}}",
+										"index.php"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 24 Oct 2023 23:12:30 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.56 (Win64) OpenSSL/1.1.1t PHP/8.2.4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Content-Length",
+									"value": "60"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"err\": \"Client could not be deleted: client id not found\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "10- Consultar Reservas",
+			"item": [
+				{
+					"name": "4-ConsultarReservas Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=2023-09-30&dateTo=2023-10-05&onlyCanceled=false",
+							"protocol": "{{protocolo}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"{{path}}",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "GetBookings"
+								},
+								{
+									"key": "roomType",
+									"value": "Todos"
+								},
+								{
+									"key": "dateFrom",
+									"value": "2023-09-30"
+								},
+								{
+									"key": "dateTo",
+									"value": "2023-10-05"
+								},
+								{
+									"key": "clientId",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "onlyCanceled",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "4-ConsultarReservas - Encontrada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=2023-10-30&dateTo=2023-11-05",
+									"protocol": "{{protocolo}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{puerto}}",
+									"path": [
+										"{{path}}",
+										"index.php"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "GetBookings"
+										},
+										{
+											"key": "roomType",
+											"value": "Todos"
+										},
+										{
+											"key": "dateFrom",
+											"value": "2023-10-30"
+										},
+										{
+											"key": "dateTo",
+											"value": "2023-11-05"
+										},
+										{
+											"key": "clientId",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 24 Oct 2023 20:06:53 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.56 (Win64) OpenSSL/1.1.1t PHP/8.2.4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Content-Length",
+									"value": "214"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"bookings\": [\n            {\n                \"bookingId\": \"1\",\n                \"clientType\": \"Coorporativo\",\n                \"clientId\": \"1000001\",\n                \"checkIn\": \"2023-10-30\",\n                \"checkOut\": \"2023-11-05\",\n                \"roomType\": \"Single\",\n                \"totalBookingAmount\": 500,\n                \"status\": null\n            }\n        ],\n        \"totalBookingAmount\": 500\n    }\n]"
+						},
+						{
+							"name": "4-ConsultarReservas - Rango sin reservas",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=2023-09-30&dateTo=2023-10-05",
+									"protocol": "{{protocolo}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{puerto}}",
+									"path": [
+										"{{path}}",
+										"index.php"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "GetBookings"
+										},
+										{
+											"key": "roomType",
+											"value": "Todos"
+										},
+										{
+											"key": "dateFrom",
+											"value": "2023-09-30"
+										},
+										{
+											"key": "dateTo",
+											"value": "2023-10-05"
+										},
+										{
+											"key": "clientId",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 24 Oct 2023 20:07:54 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.56 (Win64) OpenSSL/1.1.1t PHP/8.2.4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"bookings\": [],\n        \"totalBookingAmount\": 0\n    }\n]"
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [
