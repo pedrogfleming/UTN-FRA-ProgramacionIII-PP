@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['action'])) {
         switch ($_GET['action']) {
                 // 4
+                // TODO si no se pasa fecha, se devuelve las del dia anterior
             case 'GetBookings':
                 if (
                     isset($_GET['roomType']) &&
@@ -21,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         $dto->clientId = $_GET["clientId"];
                     }
 
-
                     $roomController = new RoomController();
                     $response = $roomController->Get($dto);
 
@@ -32,9 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     HttpStatusCodes::SendResponse($response, $statusCode);
                 }
                 break;
+            default:
+                HttpStatusCodes::SendResponse(['err' => 'Invalid action'],  HttpStatusCodes::BAD_REQUEST);
+                break;
         }
     } else {
-        echo json_encode(['error' => 'Falta el parametro action']);
+        HttpStatusCodes::SendResponse(['err' => 'Missing parameter action'],  HttpStatusCodes::BAD_REQUEST);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
@@ -121,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     HttpStatusCodes::SendResponse($response, $statusCode);
                 }
                 break;
+                // 6
             case 'CancelBooking':
                 if (
                     isset($_POST["clientId"]) &&
@@ -141,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                             case 'Unable to modify booking status: Booking id does not exist':
                             case 'Unable to modify booking status: Client id does not exist':
                             case 'Booking not found':
-                                    $statusCode = HttpStatusCodes::NOT_FOUND;
+                                $statusCode = HttpStatusCodes::NOT_FOUND;
                                 break;
                             case 'Unable to modify the booking':
                                 $statusCode = HttpStatusCodes::UNPROCESSABLE_ENTITY;
@@ -154,12 +158,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     HttpStatusCodes::SendResponse($response, $statusCode);
                 }
                 break;
+                // 7
+            case 'UpdateBooking':
+                if (
+                    isset($_POST["clientId"]) &&
+                    isset($_POST["clientType"]) &&
+                    isset($_POST["bookingId"]) &&
+                    isset($_POST["adjustmentReason"]) &&
+                    isset($_POST["amountToAdjust"])
+                ) {
+                    $dto = new stdClass;
+                    $dto->clientId = $_POST["clientId"];
+                    $dto->clientType = $_POST["clientType"];
+                    $dto->bookingId = $_POST["bookingId"];
+                    $dto->adjustmentReason = $_POST["adjustmentReason"];
+                    $dto->amountToAdjust = $_POST["amountToAdjust"];
+
+                    $bookingController = new RoomController();
+                    $response = $bookingController->UpdateAmount($dto);
+
+                    $statusCode = HttpStatusCodes::OK;
+                    if (isset($response->err)) {
+                        if ($response->err == "Unable to modify booking : Booking id does not exist") {
+                            $statusCode = HttpStatusCodes::NOT_FOUND;
+                        } else {
+                            $statusCode = HttpStatusCodes::UNPROCESSABLE_ENTITY;
+                        }
+                    }
+                    HttpStatusCodes::SendResponse($response, $statusCode);
+                }
+                break;
             default:
-                echo json_encode(['error' => 'Accion no valida']);
+                HttpStatusCodes::SendResponse(['err' => 'Invalid action'],  HttpStatusCodes::BAD_REQUEST);
                 break;
         }
     } else {
-        echo json_encode(['error' => 'Falta el parametro action']);
+        HttpStatusCodes::SendResponse(['err' => 'Missing parameter action'],  HttpStatusCodes::BAD_REQUEST);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $_PUT = file_get_contents("php://input");
@@ -205,6 +239,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     HttpStatusCodes::SendResponse($response, $statusCode);
                 }
                 break;
+            default:
+                HttpStatusCodes::SendResponse(['err' => 'Invalid action'],  HttpStatusCodes::BAD_REQUEST);
+                break;
         }
+    } else {
+        HttpStatusCodes::SendResponse(['err' => 'Missing parameter action'],  HttpStatusCodes::BAD_REQUEST);
     }
 }

@@ -1,17 +1,21 @@
 <?php
 require_once("./Repositories/BookingRepository.php");
 require_once("./Repositories/ClientRepository.php");
+require_once("./Repositories/BookingAdjustmentHistoryRepository.php");
 require_once("./Models/Client.php");
 require_once("./Models/Booking.php");
+require_once("./Models/BookingChange.php");
 
 class CustomerBooking
 {
     private $_bookingRepository;
     private $_clientRepository;
+    private $_historyAdjustmentRepository;
     public function __construct()
     {
         $this->_bookingRepository = new BookingRepository();
         $this->_clientRepository = new ClientRepository();
+        $this->_historyAdjustmentRepository = new BookingAdjustmentHistoryRepository();
     }
     public function Get($searchCriteria)
     {
@@ -92,7 +96,6 @@ class CustomerBooking
 
     public function CancelBooking($dto)
     {
-        $ret = new stdClass();
         if (isset($dto)) {
             if ($this->ClientExistsById($dto->clientId, $dto->clientType)) {
                 $targetBooking = $this->_bookingRepository->Get($dto->bookingId);
@@ -105,6 +108,28 @@ class CustomerBooking
             } else {
                 throw new Exception('Unable to modify booking status: Client id does not exist');
             }
+        }
+    }
+
+    public function UpdateAmount($dto)
+    {
+        $booking = $this->_bookingRepository->Get($dto->bookingId);
+        if (empty($booking) && count($booking) == 1) {
+            $booking->setStatus('Modificada');
+            $booking->setTotalBookingAmount($dto->amountToAdjust);
+            $modifiedBooking = $this->_bookingRepository->Update($dto->bookingId, $booking);
+            if (is_object($modifiedBooking) && $modifiedBooking->getBookingId() === $dto->bookingId) {
+                $bookingChange = new BookingChange(
+                    $dto->clientId,
+                    $dto->clientType,
+                    $dto->bookingId,
+                    $dto->adjustmentReason,
+                    $dto->amountToAdjust
+                );
+                return $this->_historyAdjustmentRepository->Create($bookingChange);
+            }
+        } else {
+            throw new Exception('Unable to modify booking : Booking id does not exist');
         }
     }
 

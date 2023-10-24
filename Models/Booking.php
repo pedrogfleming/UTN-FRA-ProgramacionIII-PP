@@ -153,6 +153,6 @@ class Booking implements \JsonSerializable
             // Handle invalid checkIn data
             $ret = null;
         }
-        return $ret;
+        return $ret; 
     }
 }

@@ -1,5 +1,6 @@
 <?php
 require_once("./Models/Booking.php");
+require_once("filesManager.php");
 class BookingRepository
 {
     private $_fileName;
@@ -27,31 +28,35 @@ class BookingRepository
         } else {
             $b->setBookingId($this->_base_id);
             $bookings[0] = $b;
-            if($this->_fileManager->SaveJSON($this->_fileName, $bookings)){
+            if ($this->_fileManager->SaveJSON($this->_fileName, $bookings)) {
                 $ret = $this->Get($b->getBookingId());
                 return $ret;
-            }
-            else{
+            } else {
                 throw new Exception("Unable to register the booking");
             }
         }
     }
 
+    // TODO: Adjust references to return type like false
     public function Get($id = null)
     {
+        $notFound = array();
         if (file_exists($this->_fileName)) {
             $bookings = Booking::map($this->_fileManager->ReadJSON($this->_fileName));
             if (isset($id)) {
-                return $this->SearchById($bookings, $id);
+                $targetBooking = $this->SearchById($bookings, $id);
+                if ($targetBooking !== false) {
+                    return $targetBooking;
+                }
             } else {
                 return $bookings;
             }
-        } else {
-            return array();
         }
+        return $notFound;
     }
 
-    public function Update($bookingId, $booking){
+    public function Update($bookingId, $booking)
+    {
         $bookings = $this->Get();
         $newListBookingModified = BookingRepository::Arr_Update($bookings, $booking);
         if ($newListBookingModified !== false && count($newListBookingModified) > 0) {
@@ -71,7 +76,7 @@ class BookingRepository
             if (
                 $bookings[$i]->getBookingId() == $booking->getBookingId() &&
                 $bookings[$i]->getClientId() == $booking->getClientId() &&
-                $bookings[$i]->getClientType() == $booking->getClientType() 
+                $bookings[$i]->getClientType() == $booking->getClientType()
             ) {
                 $bookings[$i] = $booking;
                 return $bookings;
@@ -115,6 +120,3 @@ class BookingRepository
         return false;
     }
 }
-
-
-?>

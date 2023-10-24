@@ -26,6 +26,17 @@ class RoomController
         }
     }
 
+    public function UpdateAmount($dto){
+        try {
+            $customerBooking = new CustomerBooking();
+            return $customerBooking->UpdateAmount($dto);
+        } catch (\Throwable $th) {
+            $response = new stdClass();
+            $response->err = $th->getMessage();
+            return $response;
+        }
+    }
+
     public function Cancel($dto)
     {
         try {
