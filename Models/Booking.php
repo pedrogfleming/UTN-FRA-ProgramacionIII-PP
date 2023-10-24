@@ -8,6 +8,7 @@ class Booking implements \JsonSerializable
     private $checkOut;
     private $roomType;
     private $totalBookingAmount;
+    private $status;
 
     public function __construct(
         $clientType,
@@ -67,7 +68,7 @@ class Booking implements \JsonSerializable
 
     public function setCheckIn($checkIn)
     {
-        $this->checkIn = $checkIn;
+        $this->checkIn = Booking::mapDate($checkIn);
     }
 
     public function getCheckOut()
@@ -77,7 +78,7 @@ class Booking implements \JsonSerializable
 
     public function setCheckOut($checkOut)
     {
-        $this->checkOut = $checkOut;
+        $this->checkOut = Booking::mapDate($checkOut);
     }
 
     public function getRoomType()
@@ -100,6 +101,16 @@ class Booking implements \JsonSerializable
         $this->totalBookingAmount = $totalBookingAmount;
     }
 
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
     public static function AreEqual($a, $b)
     {
         return $a->getBookingId() == $b->getBookingId() ||
@@ -115,13 +126,12 @@ class Booking implements \JsonSerializable
     public static function map($arr)
     {
         $ret_arr = [];
-
         foreach ($arr as $obj) {
             $newBooking = new Booking(
                 $obj->clientType,
                 $obj->clientId,
-                DateTime::createFromFormat('Y-m-d', $obj->checkIn),
-                DateTime::createFromFormat('Y-m-d', $obj->checkOut),
+                Booking::mapDate($obj->checkIn),
+                Booking::mapDate($obj->checkOut),
                 $obj->roomType,
                 intval($obj->totalBookingAmount)
             );
@@ -129,5 +139,20 @@ class Booking implements \JsonSerializable
             array_push($ret_arr, $newBooking);
         }
         return $ret_arr;
+    }
+
+    // Data can be sdclass from datetime or string with format Y-m-d 
+    private static function mapDate($objDate)
+    {
+        $ret = null;
+        if (is_string($objDate)) {
+            $ret = DateTime::createFromFormat('Y-m-d', $objDate);
+        } elseif (is_object($objDate && isset($objDate))) {
+            $ret = DateTime::createFromFormat('Y-m-d H:i:s.u', $objDate->date, $objDate->timezone);
+        } else {
+            // Handle invalid checkIn data
+            $ret = null;
+        }
+        return $ret;
     }
 }

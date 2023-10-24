@@ -25,4 +25,16 @@ class RoomController
             return $response;
         }
     }
+
+    public function Cancel($dto)
+    {
+        try {
+            $customerBooking = new CustomerBooking();
+            return $customerBooking->CancelBooking($dto);
+        } catch (\Throwable $th) {
+            $response = new stdClass();
+            $response->err = $th->getMessage();
+            return $response;
+        }
+    }
 }

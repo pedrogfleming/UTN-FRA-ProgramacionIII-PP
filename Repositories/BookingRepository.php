@@ -51,6 +51,35 @@ class BookingRepository
         }
     }
 
+    public function Update($bookingId, $booking){
+        $bookings = $this->Get();
+        $newListBookingModified = BookingRepository::Arr_Update($bookings, $booking);
+        if ($newListBookingModified !== false && count($newListBookingModified) > 0) {
+            if ($this->_fileManager->SaveJSON($this->_fileName, $newListBookingModified)) {
+                return $this->Get($bookingId);
+            } else {
+                throw new Exception("Unable to modify the booking");
+            }
+        } else {
+            throw new Exception("Booking not found");
+        }
+    }
+
+    private static function Arr_Update($bookings, $booking)
+    {
+        for ($i = 0; $i < count($bookings); $i++) {
+            if (
+                $bookings[$i]->getBookingId() == $booking->getBookingId() &&
+                $bookings[$i]->getClientId() == $booking->getClientId() &&
+                $bookings[$i]->getClientType() == $booking->getClientType() 
+            ) {
+                $bookings[$i] = $booking;
+                return $bookings;
+            }
+        }
+        return false;
+    }
+
     private static function GetNextId($arr)
     {
         if (!empty($arr)) {

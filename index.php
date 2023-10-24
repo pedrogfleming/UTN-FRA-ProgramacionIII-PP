@@ -121,7 +121,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     HttpStatusCodes::SendResponse($response, $statusCode);
                 }
                 break;
+            case 'CancelBooking':
+                if (
+                    isset($_POST["clientId"]) &&
+                    isset($_POST["clientType"]) &&
+                    isset($_POST["bookingId"])
+                ) {
+                    $dto = new stdClass;
+                    $dto->clientId = $_POST["clientId"];
+                    $dto->clientType = $_POST["clientType"];
+                    $dto->bookingId = $_POST["bookingId"];
 
+                    $bookingController = new RoomController();
+                    $response = $bookingController->Cancel($dto);
+
+                    $statusCode = HttpStatusCodes::OK;
+                    if (isset($response->err)) {
+                        switch ($response->err) {
+                            case 'Unable to modify booking status: Booking id does not exist':
+                            case 'Unable to modify booking status: Client id does not exist':
+                            case 'Booking not found':
+                                    $statusCode = HttpStatusCodes::NOT_FOUND;
+                                break;
+                            case 'Unable to modify the booking':
+                                $statusCode = HttpStatusCodes::UNPROCESSABLE_ENTITY;
+                                break;
+                            default:
+                                $statusCode = HttpStatusCodes::INTERNAL_SERVER_ERROR;
+                                break;
+                        }
+                    }
+                    HttpStatusCodes::SendResponse($response, $statusCode);
+                }
+                break;
             default:
                 echo json_encode(['error' => 'Accion no valida']);
                 break;
@@ -135,6 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if (isset($_PUT['action'])) {
         switch ($_PUT['action']) {
+                // 5
             case 'UpdateClient':
                 if (
                     isset($_PUT["clientId"]) &&

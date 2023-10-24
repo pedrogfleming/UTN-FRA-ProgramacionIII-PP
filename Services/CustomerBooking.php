@@ -35,7 +35,7 @@ class CustomerBooking
         }
 
         // Filter by range of dates (%%% means wildcard, doestn matter the date)
-        if($searchCriteria->dateFrom !== "%%%" || $searchCriteria->dateTo !== "%%%"){
+        if ($searchCriteria->dateFrom !== "%%%" || $searchCriteria->dateTo !== "%%%") {
             $bookings = array_filter($bookings, function ($obj) use ($searchCriteria) {
                 return $obj->getCheckIn() >= DateTime::createFromFormat('Y-m-d', $searchCriteria->dateFrom) &&
                     $obj->getCheckOut() <= DateTime::createFromFormat('Y-m-d', $searchCriteria->dateTo);
@@ -89,6 +89,25 @@ class CustomerBooking
             }
         }
     }
+
+    public function CancelBooking($dto)
+    {
+        $ret = new stdClass();
+        if (isset($dto)) {
+            if ($this->ClientExistsById($dto->clientId, $dto->clientType)) {
+                $targetBooking = $this->_bookingRepository->Get($dto->bookingId);
+                if ($targetBooking !== false) {
+                    $targetBooking->setStatus('Cancelled');
+                    $this->_bookingRepository->Update($dto->clientId, $targetBooking);
+                } else {
+                    throw new Exception('Unable to modify booking status: Booking id does not exist');
+                }
+            } else {
+                throw new Exception('Unable to modify booking status: Client id does not exist');
+            }
+        }
+    }
+
     public function ClientExistsById($clientId, $clientType)
     {
         $clients = $this->_clientRepository->Get();

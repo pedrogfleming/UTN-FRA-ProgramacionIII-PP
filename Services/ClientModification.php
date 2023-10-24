@@ -12,7 +12,6 @@ class ClientModification
         $targetClient->setId($clientDTO->clientId);
 
         $clientModified = $this->_clientRepository->Update($targetClient);
-
         return $clientModified;
     }
 }
