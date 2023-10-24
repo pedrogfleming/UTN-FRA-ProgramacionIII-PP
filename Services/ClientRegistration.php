@@ -37,7 +37,7 @@ class ClientRegistration
         $ret = new stdClass;
         // The folder must be created before
         $file_folder = 'ImagenesDeClientes/2023/';
-
+        
         // Data from the file sent by POST
         $file_type =  $_FILES['userImage']['type'];
         $file_size =  $_FILES['userImage']['size'];
@@ -45,7 +45,7 @@ class ClientRegistration
         // Destination path, folder + name of the file I want to save
         $destination_path = $file_folder . $file_name;
         // We perform the validations of the file
-        if (!((strpos($file_type, "png") || strpos($file_type, "jpeg")) && ($file_size < 100000))) {
+        if (!((strpos($file_type, "png") || strpos($file_type, "jpeg") || strpos($file_type, "jpg")) && ($file_size < 100000))) {
             $ret->success = false;
             $ret->err = "The extension or the size of the files is not correct. <br><br><table><tr><td><li>.png or .jpg files are allowed<br><li>files of 100 Kb maximum are allowed.</td></tr></table>";
         } else {

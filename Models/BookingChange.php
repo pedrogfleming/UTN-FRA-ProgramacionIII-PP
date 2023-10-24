@@ -2,16 +2,12 @@
 class BookingChange implements \JsonSerializable
 {
     private $id;
-    private $clientId;
-    private $clientType;
     private $bookingId;
     private $adjustmentReason;
     private $amountToAdjust;
 
-    public function __construct($clientId, $clientType, $bookingId, $adjustmentReason, $amountToAdjust)
+    public function __construct($bookingId, $adjustmentReason, $amountToAdjust)
     {
-        $this->clientId = $clientId;
-        $this->clientType = $clientType;
         $this->bookingId = $bookingId;
         $this->adjustmentReason = $adjustmentReason;
         $this->amountToAdjust = $amountToAdjust;
@@ -30,26 +26,6 @@ class BookingChange implements \JsonSerializable
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    public function getClientId()
-    {
-        return $this->clientId;
-    }
-
-    public function setClientId($clientId)
-    {
-        $this->clientId = $clientId;
-    }
-
-    public function getClientType()
-    {
-        return $this->clientType;
-    }
-
-    public function setClientType($clientType)
-    {
-        $this->clientType = $clientType;
     }
 
     public function getBookingId()
@@ -87,8 +63,6 @@ class BookingChange implements \JsonSerializable
         $ret_arr = [];
         foreach ($arr as $obj) {
             $newBookingChange = new BookingChange(
-                $obj->clientId,
-                $obj->clientType,
                 $obj->bookingId,
                 $obj->adjustmentReason,
                 $obj->amountToAdjust

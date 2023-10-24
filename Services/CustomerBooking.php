@@ -41,8 +41,8 @@ class CustomerBooking
         // Filter by range of dates (%%% means wildcard, doestn matter the date)
         if ($searchCriteria->dateFrom !== "%%%" || $searchCriteria->dateTo !== "%%%") {
             $bookings = array_filter($bookings, function ($obj) use ($searchCriteria) {
-                return $obj->getCheckIn() >= DateTime::createFromFormat('Y-m-d', $searchCriteria->dateFrom) &&
-                    $obj->getCheckOut() <= DateTime::createFromFormat('Y-m-d', $searchCriteria->dateTo);
+                return DateTime::createFromFormat('Y-m-d', $obj->getCheckIn()) >= DateTime::createFromFormat('Y-m-d', $searchCriteria->dateFrom) &&
+                    DateTime::createFromFormat('Y-m-d', $obj->getCheckOut()) <= DateTime::createFromFormat('Y-m-d', $searchCriteria->dateTo);
             });
             $bookings = array_values($bookings);
         }
@@ -101,7 +101,7 @@ class CustomerBooking
                 $targetBooking = $this->_bookingRepository->Get($dto->bookingId);
                 if ($targetBooking !== false) {
                     $targetBooking->setStatus('Cancelled');
-                    return $this->_bookingRepository->Update($dto->clientId, $targetBooking);
+                    return $this->_bookingRepository->Update($dto->bookingId, $targetBooking);
                 } else {
                     throw new Exception('Unable to modify booking status: Booking id does not exist');
                 }
@@ -120,8 +120,6 @@ class CustomerBooking
             $modifiedBooking = $this->_bookingRepository->Update($dto->bookingId, $booking);
             if (is_object($modifiedBooking) && $modifiedBooking->getBookingId() === $dto->bookingId) {
                 $bookingChange = new BookingChange(
-                    $dto->clientId,
-                    $dto->clientType,
                     $dto->bookingId,
                     $dto->adjustmentReason,
                     intval($dto->amountToAdjust)

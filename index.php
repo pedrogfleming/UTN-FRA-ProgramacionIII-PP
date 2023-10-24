@@ -169,15 +169,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 // 7
             case 'AdjustBookingAmount':
                 if (
-                    isset($_POST["clientId"]) &&
-                    isset($_POST["clientType"]) &&
                     isset($_POST["bookingId"]) &&
                     isset($_POST["adjustmentReason"]) &&
                     isset($_POST["amountToAdjust"])
                 ) {
                     $dto = new stdClass;
-                    $dto->clientId = $_POST["clientId"];
-                    $dto->clientType = $_POST["clientType"];
                     $dto->bookingId = $_POST["bookingId"];
                     $dto->adjustmentReason = $_POST["adjustmentReason"];
                     $dto->amountToAdjust = $_POST["amountToAdjust"];

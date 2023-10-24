@@ -115,8 +115,8 @@ class Booking implements \JsonSerializable
     {
         return $a->getBookingId() == $b->getBookingId() ||
             ($a->getClientType() == $b->getClientType() &&
-                $a->getCheckIn() == $b->getCheckIn() &&
-                $a->getCheckOut() == $b->getCheckOut() &&
+                Booking::mapDate($a->getCheckIn()) == Booking::mapDate($b->getCheckIn()) &&
+                Booking::mapDate($a->getCheckOut()) == Booking::mapDate($b->getCheckOut()) &&
                 $a->getRoomType() == $b->getRoomType() &&
                 $a->getTotalBookingAmount() == $b->getTotalBookingAmount() &&
                 $a->getClientId() == $b->getClientId()
@@ -136,6 +136,9 @@ class Booking implements \JsonSerializable
                 intval($obj->totalBookingAmount)
             );
             $newBooking->setBookingId($obj->bookingId);
+            if(isset($obj->status)){
+                $newBooking->setStatus($obj->status);
+            }
             array_push($ret_arr, $newBooking);
         }
         return $ret_arr;
@@ -146,9 +149,9 @@ class Booking implements \JsonSerializable
     {
         $ret = null;
         if (is_string($objDate)) {
-            $ret = DateTime::createFromFormat('Y-m-d', $objDate);
-        } elseif (is_object($objDate && isset($objDate))) {
-            $ret = DateTime::createFromFormat('Y-m-d H:i:s.u', $objDate->date, $objDate->timezone);
+            $ret = $objDate;
+        } else if($objDate instanceof DateTime) {
+            $ret = $objDate->format('Y-m-d');
         } else {
             // Handle invalid checkIn data
             $ret = null;

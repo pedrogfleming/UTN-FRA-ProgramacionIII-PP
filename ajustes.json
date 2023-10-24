@@ -1,18 +1,1 @@
-[
-    {
-        "id": "1",
-        "clientId": "1000001",
-        "clientType": "Coorporativo",
-        "bookingId": "1",
-        "adjustmentReason": "\"Se robo una toalla\"",
-        "amountToAdjust": 2000
-    },
-    {
-        "id": "2",
-        "clientId": "1000001",
-        "clientType": "Coorporativo",
-        "bookingId": "1",
-        "adjustmentReason": "\"Se robo una toalla\"",
-        "amountToAdjust": 2000
-    }
-]
+[{"id":"101","bookingId":"1","adjustmentReason":"\"Se robo una toalla\"","amountToAdjust":2000}]

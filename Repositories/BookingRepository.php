@@ -37,7 +37,6 @@ class BookingRepository
         }
     }
 
-    // TODO: Adjust references to return type like false
     public function Get($id = null)
     {
         $notFound = array();
