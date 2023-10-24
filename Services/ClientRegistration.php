@@ -11,7 +11,7 @@ class ClientRegistration
     {
         require_once("./Models/Client.php");
         if (isset($clientDTO)) {
-            $newClient = new Client($clientDTO->name, $clientDTO->lastName, $clientDTO->documentType, $clientDTO->documentNumber, $clientDTO->email, $clientDTO->clientType, $clientDTO->country, $clientDTO->city, $clientDTO->phoneNumber);
+            $newClient = new Client($clientDTO->name, $clientDTO->lastName, $clientDTO->documentType, $clientDTO->documentNumber, $clientDTO->email, $clientDTO->clientType, $clientDTO->country, $clientDTO->city, $clientDTO->phoneNumber, $clientDTO->paymentMethod);
             if (!$this->_clientRepository->ClientExist($newClient)) {
                 $createdClient =  $this->_clientRepository->Create($newClient);
                 if (!empty($createdClient) && isset($createdClient[0])) {

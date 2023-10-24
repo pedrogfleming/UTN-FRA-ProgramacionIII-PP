@@ -39,4 +39,17 @@ class ClientController
             return $response;
         }
     }
+
+    public function Delete($dto)
+    {
+        require_once("./Services/ClientDelete.php");
+        $clientQuery = new ClientDelete();
+        try {
+            return $clientQuery->Delete($dto);
+        } catch (\Throwable $th) {
+            $response = new stdClass();
+            $response->err = $th->getMessage();
+            return $response;
+        }
+    }
 }

@@ -11,25 +11,39 @@ class Client implements \JsonSerializable
     private $country;
     private $city;
     private $phoneNumber;
+    private $paymentMethod;
 
 
-    public function __construct($name, $lastName, $documentType, $documentNumber, $email, $clientType, $country, $city, $phoneNumber, $id = null)
+    public function __construct($name, $lastName, $documentType, $documentNumber, $email, $clientType, $country, $city, $phoneNumber, $id = null, $paymentMethod = "efectivo")
     {
         $this->name = $name;
         $this->lastName = $lastName;
         $this->documentType = $documentType;
         $this->documentNumber = $documentNumber;
         $this->email = $email;
-        $this->clientType = $clientType;
+
+        $this->setClientType($clientType);
+
         $this->country = $country;
         $this->city = $city;
         $this->phoneNumber = $phoneNumber;
         $this->id = $id;
+        $this->paymentMethod = $paymentMethod;
     }
 
     public function jsonSerialize()
     {
         return get_object_vars($this);
+    }
+
+    public function getPaymentMethod()
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod($p)
+    {
+        $this->paymentMethod = $p;
     }
 
     public function getId()
@@ -99,7 +113,7 @@ class Client implements \JsonSerializable
 
     public function setClientType($clientType)
     {
-        $this->clientType = $clientType;
+        $this->clientType = $clientType . "-" .  $this->documentType;
     }
 
     public function getCountry()
@@ -136,7 +150,9 @@ class Client implements \JsonSerializable
     {
         return $a->getClientType() == $b->getClientType() &&
             $a->getName() == $b->getName() &&
-            $a->getLastName() == $b->getLastName();
+            $a->getLastName() == $b->getLastName() &&
+            $a->getId() == $b->getId() &&
+            $a->getDocumentNumber() == $b->getDocumentNumber;
     }
 
     public static function map($arr)

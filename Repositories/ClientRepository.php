@@ -71,6 +71,21 @@ class ClientRepository
         }
     }
 
+    public function Delete($clientId, $clientType){
+         $clients = $this->Get();
+         $deleted = false;
+         for ($i = 0; $i < count($clients); $i++) {
+            if (
+                $clients[$i]->getId() == $clientId &&
+                $clients[$i]->getClientType() == $clientType
+            ) {
+                $clients[$i]->isDeleted = true;
+                $deleted = true;
+            }
+        }
+        return $deleted;
+    }
+
     private static function Arr_Update($clients, $client)
     {
         for ($i = 0; $i < count($clients); $i++) {

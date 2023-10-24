@@ -22,6 +22,14 @@ class CustomerBooking
         $ret = new stdClass();
         $bookings = $this->_bookingRepository->Get();
 
+        // Filter by cancelled bookings
+        if(isset($searchCriteria->onlyCanceled)){
+            $bookings = array_filter($bookings, function ($obj){
+                return $obj->getStatus() == "Cancelled";
+            });
+            $bookings = array_values($bookings);
+        }
+
         // Filter by client
         if (isset($searchCriteria->clientId)) {
             $bookings = array_filter($bookings, function ($obj) use ($searchCriteria) {
