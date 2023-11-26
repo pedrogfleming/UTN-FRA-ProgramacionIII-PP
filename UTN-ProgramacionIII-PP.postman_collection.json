@@ -992,12 +992,12 @@
 								},
 								{
 									"key": "clientType",
-									"value": "Coorporativo",
+									"value": "Coorporativo-Dni",
 									"type": "text"
 								},
 								{
 									"key": "clientId",
-									"value": "1000001",
+									"value": "1000003",
 									"type": "text"
 								},
 								{
@@ -1012,7 +1012,7 @@
 								},
 								{
 									"key": "totalBookingAmount",
-									"value": "500",
+									"value": "1500",
 									"type": "text"
 								},
 								{
@@ -1378,7 +1378,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=2023-09-30&dateTo=2023-10-05",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Single&dateFrom=%%%&dateTo=%%%",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -1395,15 +1395,15 @@
 								},
 								{
 									"key": "roomType",
-									"value": "Todos"
+									"value": "Single"
 								},
 								{
 									"key": "dateFrom",
-									"value": "2023-09-30"
+									"value": "%%%"
 								},
 								{
 									"key": "dateTo",
-									"value": "2023-10-05"
+									"value": "%%%"
 								},
 								{
 									"key": "clientId",
@@ -1600,7 +1600,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"action\": \"UpdateClient\",\r\n    \"clientId\": \"1000020\",\r\n    \"name\": \"Moria\",\r\n    \"lastName\": \"Casan\",\r\n    \"documentType\": \"Dni\",\r\n    \"documentNumber\": \"0000000001\",\r\n    \"email\": \"momo-casan@example.com\",\r\n    \"clientType\": \"Coorporativo\",\r\n    \"country\": \"Paraguay\",\r\n    \"city\": \"Asuncion\",\r\n    \"phoneNumber\": \"+541112348080\"\r\n}"
+							"raw": "{\r\n    \"action\": \"UpdateClient\",\r\n    \"clientId\": \"1000001\",\r\n    \"name\": \"Moria\",\r\n    \"lastName\": \"Casan\",\r\n    \"documentType\": \"Dni\",\r\n    \"documentNumber\": \"0000000001\",\r\n    \"email\": \"momo-casan-modifcado@example.com\",\r\n    \"clientType\": \"Coorporativo\",\r\n    \"country\": \"Paraguay\",\r\n    \"city\": \"Asuncion\",\r\n    \"phoneNumber\": \"+541112348080\"\r\n}"
 						},
 						"url": {
 							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
@@ -1790,12 +1790,12 @@
 								},
 								{
 									"key": "clientType",
-									"value": "Coorporativo",
+									"value": "Coorporativo-Dni",
 									"type": "text"
 								},
 								{
 									"key": "bookingId",
-									"value": "10000",
+									"value": "1",
 									"type": "text"
 								}
 							]
@@ -2100,7 +2100,7 @@
 								},
 								{
 									"key": "bookingId",
-									"value": "10000000",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -2110,7 +2110,7 @@
 								},
 								{
 									"key": "amountToAdjust",
-									"value": "2000",
+									"value": "3000",
 									"type": "text"
 								}
 							]
@@ -2304,7 +2304,231 @@
 			]
 		},
 		{
-			"name": "Eliminar Cliente",
+			"name": "8-Cliente Alta",
+			"item": [
+				{
+					"name": "1-Cliente Alta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "action",
+									"value": "ClientRegistration",
+									"description": "ClientRegistration",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Marcelo",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Tinelli",
+									"type": "text"
+								},
+								{
+									"key": "documentType",
+									"value": "Dni",
+									"type": "text"
+								},
+								{
+									"key": "documentNumber",
+									"value": "39183549",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "marcelo-tinelli@example.com",
+									"type": "text"
+								},
+								{
+									"key": "clientType",
+									"value": "Single",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "Argentina",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Boedo",
+									"type": "text"
+								},
+								{
+									"key": "phoneNumber",
+									"value": "+541112349091",
+									"type": "text"
+								},
+								{
+									"key": "userImage",
+									"type": "file",
+									"src": "/D:/Environments/XAMP/htdocs/UTN-ProgIII-PP-2023/TestingIImages/marcelo-tinelli.jpg"
+								},
+								{
+									"key": "paymentMethod",
+									"value": "tarjeta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"protocol": "{{protocolo}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"{{path}}",
+								"index.php"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "8-Cliente Alta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "action",
+											"value": "ClientRegistration",
+											"description": "ClientRegistration",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Marcelo",
+											"type": "text"
+										},
+										{
+											"key": "lastName",
+											"value": "Tinelli",
+											"type": "text"
+										},
+										{
+											"key": "documentType",
+											"value": "Dni",
+											"type": "text"
+										},
+										{
+											"key": "documentNumber",
+											"value": "39183549",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "marcelo-tinelli@example.com",
+											"type": "text"
+										},
+										{
+											"key": "clientType",
+											"value": "Coorporativo",
+											"type": "text"
+										},
+										{
+											"key": "country",
+											"value": "Argentina",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "Boedo",
+											"type": "text"
+										},
+										{
+											"key": "phoneNumber",
+											"value": "+541112349091",
+											"type": "text"
+										},
+										{
+											"key": "userImage",
+											"type": "file",
+											"src": "/D:/Environments/XAMP/htdocs/UTN-ProgIII-PP-2023/TestingIImages/marcelo-tinelli.jpg"
+										},
+										{
+											"key": "paymentMethod",
+											"value": "efectivo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+									"protocol": "{{protocolo}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{puerto}}",
+									"path": [
+										"{{path}}",
+										"index.php"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Oct 2023 00:08:59 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.56 (Win64) OpenSSL/1.1.1t PHP/8.2.4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Content-Length",
+									"value": "275"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    [\n        {\n            \"id\": \"1000003\",\n            \"name\": \"Marcelo\",\n            \"lastName\": \"Tinelli\",\n            \"documentType\": \"Dni\",\n            \"documentNumber\": \"39183549\",\n            \"email\": \"marcelo-tinelli@example.com\",\n            \"clientType\": \"Coorporativo-Dni-Dni\",\n            \"country\": \"Argentina\",\n            \"city\": \"Boedo\",\n            \"phoneNumber\": \"+541112349091\",\n            \"paymentMethod\": \"efectivo\"\n        }\n    ]\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "9-Eliminar Cliente",
 			"item": [
 				{
 					"name": "9-Eliminar Cliente",
@@ -2319,7 +2543,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000001231\",\r\n    \"clientType\": \"Coorporativo\"\r\n}"
+							"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000003\",\r\n    \"clientType\": \"Coorporativo-Dni-Dni\"\r\n}"
 						},
 						"url": {
 							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
@@ -2342,13 +2566,19 @@
 								"header": [
 									{
 										"key": "Content-Type",
+										"name": "Content-Type",
 										"value": "application/json",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000001\",\r\n    \"clientType\": \"Coorporativo\"\r\n}"
+									"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000001\",\r\n    \"clientType\": \"Coorporativo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
 								"url": {
 									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
@@ -2406,13 +2636,19 @@
 								"header": [
 									{
 										"key": "Content-Type",
+										"name": "Content-Type",
 										"value": "application/json",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000001231\",\r\n    \"clientType\": \"Coorporativo\"\r\n}"
+									"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000001231\",\r\n    \"clientType\": \"Coorporativo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
 								"url": {
 									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
@@ -2471,7 +2707,7 @@
 			"name": "10- Consultar Reservas",
 			"item": [
 				{
-					"name": "4-ConsultarReservas Copy",
+					"name": "10-ConsultarReservas",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -2482,7 +2718,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=2023-09-30&dateTo=2023-10-05&onlyCanceled=false",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=%%%&dateTo=%%%&clientId=1000001",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -2503,27 +2739,27 @@
 								},
 								{
 									"key": "dateFrom",
-									"value": "2023-09-30"
+									"value": "%%%"
 								},
 								{
 									"key": "dateTo",
-									"value": "2023-10-05"
+									"value": "%%%"
 								},
 								{
 									"key": "clientId",
-									"value": "",
-									"disabled": true
+									"value": "1000001"
 								},
 								{
 									"key": "onlyCanceled",
-									"value": "false"
+									"value": "true",
+									"disabled": true
 								}
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "4-ConsultarReservas - Encontrada",
+							"name": "10-A- Total cancelado",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -2534,7 +2770,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=2023-10-30&dateTo=2023-11-05",
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=2023-10-30&dateTo=2023-11-05&onlyCanceled=true",
 									"protocol": "{{protocolo}}",
 									"host": [
 										"{{server}}"
@@ -2565,6 +2801,10 @@
 											"key": "clientId",
 											"value": "",
 											"disabled": true
+										},
+										{
+											"key": "onlyCanceled",
+											"value": "true"
 										}
 									]
 								}
@@ -2606,7 +2846,7 @@
 							"body": "[\n    {\n        \"bookings\": [\n            {\n                \"bookingId\": \"1\",\n                \"clientType\": \"Coorporativo\",\n                \"clientId\": \"1000001\",\n                \"checkIn\": \"2023-10-30\",\n                \"checkOut\": \"2023-11-05\",\n                \"roomType\": \"Single\",\n                \"totalBookingAmount\": 500,\n                \"status\": null\n            }\n        ],\n        \"totalBookingAmount\": 500\n    }\n]"
 						},
 						{
-							"name": "4-ConsultarReservas - Rango sin reservas",
+							"name": "10-B- Total cancelado para un cliente",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -2617,7 +2857,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=2023-09-30&dateTo=2023-10-05",
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=%%%&dateTo=%%%&clientId=1000001&onlyCanceled=true",
 									"protocol": "{{protocolo}}",
 									"host": [
 										"{{server}}"
@@ -2638,27 +2878,30 @@
 										},
 										{
 											"key": "dateFrom",
-											"value": "2023-09-30"
+											"value": "%%%"
 										},
 										{
 											"key": "dateTo",
-											"value": "2023-10-05"
+											"value": "%%%"
 										},
 										{
 											"key": "clientId",
-											"value": "",
-											"disabled": true
+											"value": "1000001"
+										},
+										{
+											"key": "onlyCanceled",
+											"value": "true"
 										}
 									]
 								}
 							},
-							"status": "Not Found",
-							"code": 404,
+							"status": "OK",
+							"code": 200,
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
 									"key": "Date",
-									"value": "Tue, 24 Oct 2023 20:07:54 GMT"
+									"value": "Tue, 24 Oct 2023 20:06:53 GMT"
 								},
 								{
 									"key": "Server",
@@ -2670,7 +2913,7 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "40"
+									"value": "214"
 								},
 								{
 									"key": "Keep-Alive",
@@ -2686,7 +2929,182 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"bookings\": [],\n        \"totalBookingAmount\": 0\n    }\n]"
+							"body": "[\n    {\n        \"bookings\": [\n            {\n                \"bookingId\": \"1\",\n                \"clientType\": \"Coorporativo\",\n                \"clientId\": \"1000001\",\n                \"checkIn\": \"2023-10-30\",\n                \"checkOut\": \"2023-11-05\",\n                \"roomType\": \"Single\",\n                \"totalBookingAmount\": 500,\n                \"status\": null\n            }\n        ],\n        \"totalBookingAmount\": 500\n    }\n]"
+						},
+						{
+							"name": "10-C- ConsultarReservas",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=2023-01-01&dateTo=2023-03-30",
+									"protocol": "{{protocolo}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{puerto}}",
+									"path": [
+										"{{path}}",
+										"index.php"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "GetBookings"
+										},
+										{
+											"key": "roomType",
+											"value": "Todos"
+										},
+										{
+											"key": "dateFrom",
+											"value": "2023-01-01"
+										},
+										{
+											"key": "dateTo",
+											"value": "2023-03-30"
+										},
+										{
+											"key": "clientId",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "onlyCanceled",
+											"value": "true",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 24 Oct 2023 23:50:23 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.56 (Win64) OpenSSL/1.1.1t PHP/8.2.4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Content-Length",
+									"value": "395"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"bookings\": [\n            {\n                \"bookingId\": \"99\",\n                \"clientType\": \"Individual\",\n                \"clientId\": \"1000001\",\n                \"checkIn\": \"2023-01-30\",\n                \"checkOut\": \"2023-02-05\",\n                \"roomType\": \"Single\",\n                \"totalBookingAmount\": 300,\n                \"status\": \"Cancelled\"\n            },\n            {\n                \"bookingId\": \"100\",\n                \"clientType\": \"Individual\",\n                \"clientId\": \"1000001\",\n                \"checkIn\": \"2023-02-01\",\n                \"checkOut\": \"2023-02-24\",\n                \"roomType\": \"Single\",\n                \"totalBookingAmount\": 2000,\n                \"status\": null\n            }\n        ],\n        \"totalBookingAmount\": 2300\n    }\n]"
+						},
+						{
+							"name": "10-E-ConsultarReservas",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=%%%&dateTo=%%%&clientId=1000001",
+									"protocol": "{{protocolo}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{puerto}}",
+									"path": [
+										"{{path}}",
+										"index.php"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "GetBookings"
+										},
+										{
+											"key": "roomType",
+											"value": "Todos"
+										},
+										{
+											"key": "dateFrom",
+											"value": "%%%"
+										},
+										{
+											"key": "dateTo",
+											"value": "%%%"
+										},
+										{
+											"key": "clientId",
+											"value": "1000001"
+										},
+										{
+											"key": "onlyCanceled",
+											"value": "true",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 24 Oct 2023 23:51:26 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.56 (Win64) OpenSSL/1.1.1t PHP/8.2.4"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Content-Length",
+									"value": "751"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"bookings\": [\n            {\n                \"bookingId\": \"99\",\n                \"clientType\": \"Individual\",\n                \"clientId\": \"1000001\",\n                \"checkIn\": \"2023-01-30\",\n                \"checkOut\": \"2023-02-05\",\n                \"roomType\": \"Single\",\n                \"totalBookingAmount\": 300,\n                \"status\": \"Cancelled\"\n            },\n            {\n                \"bookingId\": \"100\",\n                \"clientType\": \"Individual\",\n                \"clientId\": \"1000001\",\n                \"checkIn\": \"2023-02-01\",\n                \"checkOut\": \"2023-02-24\",\n                \"roomType\": \"Single\",\n                \"totalBookingAmount\": 2000,\n                \"status\": null\n            },\n            {\n                \"bookingId\": \"101\",\n                \"clientType\": \"Coorporativo\",\n                \"clientId\": \"1000001\",\n                \"checkIn\": \"2023-09-25\",\n                \"checkOut\": \"2023-10-09\",\n                \"roomType\": \"Single\",\n                \"totalBookingAmount\": 1000,\n                \"status\": \"Cancelled\"\n            },\n            {\n                \"bookingId\": \"1\",\n                \"clientType\": \"Coorporativo\",\n                \"clientId\": \"1000001\",\n                \"checkIn\": \"2023-10-30\",\n                \"checkOut\": \"2023-11-05\",\n                \"roomType\": \"Single\",\n                \"totalBookingAmount\": 100,\n                \"status\": null\n            }\n        ],\n        \"totalBookingAmount\": 3400\n    }\n]"
 						}
 					]
 				}
