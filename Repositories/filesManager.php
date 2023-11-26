@@ -1,30 +1,6 @@
 <?php
 class filesManager
 {
-    // function ReadJSON($fileName = ''){
-    //     $arrayJSON = [];
-
-    //     if(!empty($fileName)){            
-    //         if(file_exists($fileName)){
-
-    //             $file = fopen($fileName,'r');
-    //             $fSize = filesize($fileName);
-
-    //             if ($fSize > 0) {
-    //                 $fread = fread($file,$fSize);
-    //             } else {
-    //                 $fread = '{}';
-    //             }
-    //             fclose($file);
-    //             $arrayJSON = json_decode($fread);
-    //         }
-    //         else{
-    //             throw new Exception('File does not exist');
-    //         }
-    //     return $arrayJSON;
-    //     }
-    // }
-
     function ReadJSON($fileName = '')
     {
         $arrayJSON = [];

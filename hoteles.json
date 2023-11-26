@@ -4,12 +4,13 @@
         "name": "Moria",
         "lastName": "Casan",
         "documentType": "Dni",
-        "documentNumber": "9999999",
-        "email": "momo-casan@example.com",
-        "clientType": "Coorporativo",
+        "documentNumber": "0000000001",
+        "email": "momo-casan-modifcado@example.com",
+        "clientType": "Coorporativo-Dni",
         "country": "Paraguay",
         "city": "Asuncion",
-        "phoneNumber": "+541112348080"
+        "phoneNumber": "+541112348080",
+        "paymentMethod": "efectivo"
     },
     {
         "id": "1000002",
@@ -18,9 +19,49 @@
         "documentType": "Dni",
         "documentNumber": "000000020",
         "email": "carmen-barbieri@example.com",
-        "clientType": "Coorporativo",
+        "clientType": "Coorporativo-Dni",
         "country": "Argentina",
         "city": "Buenos Aires",
-        "phoneNumber": "+541112348081"
+        "phoneNumber": "+541112348081",
+        "paymentMethod": "efectivo"
+    },
+    {
+        "id": "1000003",
+        "name": "Marcelo",
+        "lastName": "Tinelli",
+        "documentType": "Dni",
+        "documentNumber": "39183549",
+        "email": "marcelo-tinelli@example.com",
+        "clientType": "Coorporativo-Dni-Dni",
+        "country": "Argentina",
+        "city": "Boedo",
+        "phoneNumber": "+541112349091",
+        "paymentMethod": "efectivo"
+    },
+    {
+        "id": "1000004",
+        "name": "Marcelo",
+        "lastName": "Tinelli",
+        "documentType": "Dni",
+        "documentNumber": "39183549",
+        "email": "marcelo-tinelli@example.com",
+        "clientType": "Coorporativo-Dni-Dni",
+        "country": "Argentina",
+        "city": "Boedo",
+        "phoneNumber": "+541112349091",
+        "paymentMethod": "efectivo"
+    },
+    {
+        "id": "1000005",
+        "name": "Moria",
+        "lastName": "Casan",
+        "documentType": "Dni",
+        "documentNumber": "000000010",
+        "email": "momo-casan@example.com",
+        "clientType": "Coorporativo-Dni",
+        "country": "Paraguay",
+        "city": "Asuncion",
+        "phoneNumber": "+541112348080",
+        "paymentMethod": "efectivo"
     }
 ]
