@@ -11,7 +11,19 @@ class ClientRegistration
     {
         require_once("./Models/Client.php");
         if (isset($clientDTO)) {
-            $newClient = new Client($clientDTO->name, $clientDTO->lastName, $clientDTO->documentType, $clientDTO->documentNumber, $clientDTO->email, $clientDTO->clientType, $clientDTO->country, $clientDTO->city, $clientDTO->phoneNumber, $clientDTO->paymentMethod);
+            $newClient = new Client(
+                $clientDTO->name,
+                $clientDTO->lastName,
+                $clientDTO->documentType,
+                $clientDTO->documentNumber,
+                $clientDTO->email,
+                $clientDTO->clientType,
+                $clientDTO->country,
+                $clientDTO->city,
+                $clientDTO->phoneNumber,
+                null,   //id
+                $clientDTO->paymentMethod
+            );
             if (!$this->_clientRepository->ClientExist($newClient)) {
                 $createdClient =  $this->_clientRepository->Create($newClient);
                 if (!empty($createdClient) && isset($createdClient[0])) {
@@ -22,8 +34,7 @@ class ClientRegistration
                     } else {
                         throw new Exception('Unable to upload image for client: ' . $statusImageUpload->err);
                     }
-                }
-                else{
+                } else {
                     throw new Exception('Unable to register the new client: unepexted error');
                 }
             } else {
@@ -32,29 +43,30 @@ class ClientRegistration
         }
     }
 
-private function GuardarFoto($nombreArchivo){
-    $ret = new stdClass;
-    // La carpeta debe crearse previamente
-    $carpeta_archivo = 'ImagenesPedidos/2023/';
-    
-    // Datos del archivo enviado por POST
-    $tipo_archivo =  $_FILES['userImage']['type'];
-    $tamano_archivo =  $_FILES['userImage']['size'];
+    public function UploadImage($file_name)
+    {
+        $ret = new stdClass;
+        // The folder must be created before
+        $file_folder = 'ImagenesDeClientes/2023/';
 
-    // Ruta de destino, carpeta + nombre del archivo que quiero guardar
-    $ruta_destino = $carpeta_archivo . $nombreArchivo;
-    // Realizamos las validaciones del archivo
-    if (!((strpos($tipo_archivo, "png") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "jpg")) && ($tamano_archivo < 100000))) {
-        $ret->success = false;
-        $ret->err = "La extensión o el tamaño de los archivos no es correcto. <br><br><table><tr><td><li>Solo se permiten archivos .png o .jpg<br><li>Se permiten archivos de un máximo de 100 Kb.</td></tr></table>";
-    } else {
-        if (move_uploaded_file($_FILES['userImage']['tmp_name'],  $ruta_destino)) {
-            $ret->success = true;
-        } else {
+        // Data from the file sent by POST
+        $file_type =  $_FILES['userImage']['type'];
+        $file_size =  $_FILES['userImage']['size'];
+
+        // Destination path, folder + name of the file I want to save
+        $destination_path = $file_folder . $file_name;
+        // We perform the validations of the file
+        if (!((strpos($file_type, "png") || strpos($file_type, "jpeg") || strpos($file_type, "jpg")) && ($file_size < 300000))) {
             $ret->success = false;
-            $ret->err = "Se produjo un error al cargar el archivo. No se pudo guardar.";
+            $ret->err = "The extension or the size of the files is not correct. <br><br><table><tr><td><li>.png or .jpg files are allowed<br><li>files of 300 Kb maximum are allowed.</td></tr></table>";
+        } else {
+            if (move_uploaded_file($_FILES['userImage']['tmp_name'],  $destination_path)) {
+                $ret->success = true;
+            } else {
+                $ret->success = false;
+                $ret->err = "An error occurred when uploading the file. It could not be saved.";
+            }
         }
+        return $ret;
     }
-    return $ret;
-}
 }

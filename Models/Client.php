@@ -21,13 +21,17 @@ class Client implements \JsonSerializable
         $this->documentType = $documentType;
         $this->documentNumber = $documentNumber;
         $this->email = $email;
-
-        $this->setClientType($clientType);
+        if(str_contains($clientType, '-')){
+            $this->clientType = $clientType;
+        }
+        else{
+            $this->setClientType($clientType);
+        }
 
         $this->country = $country;
         $this->city = $city;
         $this->phoneNumber = $phoneNumber;
-        $this->id = $id;
+        $this->id = $id;    
         $this->paymentMethod = $paymentMethod;
     }
 
@@ -148,11 +152,8 @@ class Client implements \JsonSerializable
 
     public static function AreEqual($a, $b)
     {
-        return $a->getClientType() == $b->getClientType() &&
-            $a->getName() == $b->getName() &&
-            $a->getLastName() == $b->getLastName() &&
-            $a->getId() == $b->getId() &&
-            $a->getDocumentNumber() == $b->getDocumentNumber;
+        return ($a->getDocumentNumber() == $b->getDocumentNumber()) ||
+            $a->getId() == $b->getId();
     }
 
     public static function map($arr)
@@ -160,19 +161,24 @@ class Client implements \JsonSerializable
         $ret_arr = [];
 
         foreach ($arr as $obj) {
-            $newClient = new Client(
-                $obj->name,
-                $obj->lastName,
-                $obj->documentType,
-                $obj->documentNumber,
-                $obj->email,
-                $obj->clientType,
-                $obj->country,
-                $obj->city,
-                $obj->phoneNumber,
-                $obj->id
-            );
-            array_push($ret_arr, $newClient);
+            $isDeleted = property_exists($obj,'isDeleted');
+            $isDeleted = $isDeleted ? $obj->isDeleted : false;
+            if(!$isDeleted){
+                $newClient = new Client(
+                    $obj->name,
+                    $obj->lastName,
+                    $obj->documentType,
+                    $obj->documentNumber,
+                    $obj->email,
+                    $obj->clientType,
+                    $obj->country,
+                    $obj->city,
+                    $obj->phoneNumber,
+                    $obj->id,
+                    $obj->paymentMethod
+                );
+                array_push($ret_arr, $newClient);
+            }
         }
         return $ret_arr;
     }

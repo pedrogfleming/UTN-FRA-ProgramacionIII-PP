@@ -14,7 +14,6 @@ class ClientDelete
         if (!empty($targetClient) && isset($targetClient[0])) {
             $clientDeleted = $this->_clientRepository->Delete($targetClient[0]->getId(), $targetClient[0]->getClientType());
             if ($clientDeleted) {
-
                 $fileName = $targetClient[0]->getId() . $targetClient[0]->getClientType();
 
                 $sourcePath = 'ImagenesDeClientes/2023/' . $fileName;
@@ -23,7 +22,6 @@ class ClientDelete
                 if (!rename($sourcePath, $destinationPath)) {
                     throw new Exception("Couldnt move the photo of the deleted client to the backup location");
                 }
-
                 return $clientDeleted;
             } else {
                 throw new Exception("Client could not be deleted");

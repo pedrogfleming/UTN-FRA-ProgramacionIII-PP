@@ -14,16 +14,14 @@ class ClientRepository
     }
     public function Create($c)
     {
-        if (file_exists($this->_fileName)) {
-            $clients = $this->_fileManager->ReadJSON($this->_fileName);
-            if (!empty($clients)) {
-                $nextId = ClientRepository::GetNextId($clients);
-                $c->SetId($nextId);
+        $clients = file_exists($this->_fileName) ? $this->_fileManager->ReadJSON($this->_fileName) : array();
+        if (!empty($clients)) {
+            $nextId = ClientRepository::GetNextId($clients);
+            $c->SetId($nextId);
 
-                array_push($clients, $c);
-                if ($this->_fileManager->SaveJSON($this->_fileName, $clients)) {
-                    return $this->Get($nextId);
-                }
+            array_push($clients, $c);
+            if ($this->_fileManager->SaveJSON($this->_fileName, $clients)) {
+                return $this->Get($nextId);
             }
         } else {
             $c->SetId($this->_base_id);
@@ -71,10 +69,11 @@ class ClientRepository
         }
     }
 
-    public function Delete($clientId, $clientType){
-         $clients = $this->Get();
-         $deleted = false;
-         for ($i = 0; $i < count($clients); $i++) {
+    public function Delete($clientId, $clientType)
+    {
+        $clients = $this->Get();
+        $deleted = false;
+        for ($i = 0; $i < count($clients); $i++) {
             if (
                 $clients[$i]->getId() == $clientId &&
                 $clients[$i]->getClientType() == $clientType
@@ -82,6 +81,14 @@ class ClientRepository
                 $clients[$i]->isDeleted = true;
                 $deleted = true;
             }
+        }
+        if($deleted){
+            if (!$this->_fileManager->SaveJSON($this->_fileName, $clients)) {
+                throw new Exception("Error while saving deleted client operation");
+            }
+        }
+        else{
+            throw new Exception("Client id and type combination couldnt be found");
         }
         return $deleted;
     }

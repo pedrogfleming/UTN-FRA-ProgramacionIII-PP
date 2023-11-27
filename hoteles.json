@@ -4,8 +4,8 @@
         "name": "Moria",
         "lastName": "Casan",
         "documentType": "Dni",
-        "documentNumber": "0000000001",
-        "email": "momo-casan-modifcado@example.com",
+        "documentNumber": "000000010",
+        "email": "momo-casan@example.com",
         "clientType": "Coorporativo-Dni",
         "country": "Paraguay",
         "city": "Asuncion",
@@ -26,42 +26,17 @@
         "paymentMethod": "efectivo"
     },
     {
-        "id": "1000003",
-        "name": "Marcelo",
-        "lastName": "Tinelli",
-        "documentType": "Dni",
-        "documentNumber": "39183549",
-        "email": "marcelo-tinelli@example.com",
-        "clientType": "Coorporativo-Dni-Dni",
-        "country": "Argentina",
-        "city": "Boedo",
-        "phoneNumber": "+541112349091",
-        "paymentMethod": "efectivo"
-    },
-    {
-        "id": "1000004",
-        "name": "Marcelo",
-        "lastName": "Tinelli",
-        "documentType": "Dni",
-        "documentNumber": "39183549",
-        "email": "marcelo-tinelli@example.com",
-        "clientType": "Coorporativo-Dni-Dni",
-        "country": "Argentina",
-        "city": "Boedo",
-        "phoneNumber": "+541112349091",
-        "paymentMethod": "efectivo"
-    },
-    {
         "id": "1000005",
-        "name": "Moria",
-        "lastName": "Casan",
+        "name": "Marcelo",
+        "lastName": "Tinelli",
         "documentType": "Dni",
-        "documentNumber": "000000010",
-        "email": "momo-casan@example.com",
-        "clientType": "Coorporativo-Dni",
-        "country": "Paraguay",
-        "city": "Asuncion",
-        "phoneNumber": "+541112348080",
-        "paymentMethod": "efectivo"
+        "documentNumber": "39183549",
+        "email": "marcelo-tinelli@example.com",
+        "clientType": "Single-Dni",
+        "country": "Argentina",
+        "city": "Boedo",
+        "phoneNumber": "+541112349091",
+        "paymentMethod": "tarjeta",
+        "isDeleted": true
     }
 ]
