@@ -108,10 +108,10 @@ class CustomerBooking
     {
         if (isset($dto)) {
             if ($this->ClientExistsById($dto->clientId, $dto->clientType)) {
-                $targetBooking = $this->_bookingRepository->Get($dto->bookingId);
+                $targetBooking = Booking::mapObj($this->_bookingRepository->Get($dto->bookingId));
                 if ($targetBooking !== false) {
                     $targetBooking->setStatus('Cancelled');
-                    return $this->_bookingRepository->Update($dto->bookingId, $targetBooking);
+                    return $this->_bookingRepository->Update($targetBooking);
                 } else {
                     throw new Exception('Unable to modify booking status: Booking id does not exist');
                 }
