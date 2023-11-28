@@ -14,47 +14,38 @@ class BookingRepository
     }
     public function Create($b)
     {
-        if (file_exists($this->_fileName)) {
-            $bookings = $this->_fileManager->ReadJSON($this->_fileName);
-            if (!empty($bookings)) {
-                $nextId = BookingRepository::GetNextId($bookings);
-                $b->setBookingId($nextId);
-
-                array_push($bookings, $b);
-                if ($this->_fileManager->SaveJSON($this->_fileName, $bookings)) {
-                    return $this->Get($nextId);
-                }
-            }
-        } else {
-            $b->setBookingId($this->_base_id);
-            $bookings[0] = $b;
-            if ($this->_fileManager->SaveJSON($this->_fileName, $bookings)) {
-                $ret = $this->Get($b->getBookingId());
-                return $ret;
-            } else {
-                throw new Exception("Unable to register the booking");
-            }
+        try {
+            $objDAO = DAO::GetInstance();
+            $command = $objDAO->prepareQuery("INSERT INTO Bookings (clientType, clientId, checkIn, checkOut, roomType, totalBookingAmount, status) VALUES (?,?,?,?,?,?,?)");
+            $command->execute([$b->getClientType(), $b->getClientId(), $b->getCheckIn(), $b->getCheckOut(), $b->getRoomType(), $b->getTotalBookingAmount(), $b->getStatus()]);
+            return $objDAO->getLastId();
+        } catch (PDOException $e) {
+            throw new Exception("Unable to register the booking: " . $e->getMessage());
         }
     }
 
     public function Get($id = null)
     {
-        $notFound = array();
-        if (file_exists($this->_fileName)) {
-            $bookings = Booking::map($this->_fileManager->ReadJSON($this->_fileName));
+        try {
+            $objDAO = DAO::GetInstance();
             if (isset($id)) {
-                $targetBooking = $this->SearchById($bookings, $id);
-                if ($targetBooking !== false) {
-                    return $targetBooking;
-                }
-                else{
+                $command = $objDAO->prepareQuery("SELECT * FROM Bookings WHERE bookingId = ? AND isDeleted = 0");
+                $command->execute([$id]);
+                $result = $command->fetch(PDO::FETCH_OBJ);
+                if ($result) {
+                    return $result;
+                } else {
                     throw new Exception("Booking not found");
                 }
             } else {
-                return $bookings;
+                $command = $objDAO->prepareQuery("SELECT * FROM Bookings WHERE isDeleted = 0");
+                $command->execute();
+                $results = $command->fetchAll(PDO::FETCH_OBJ);
+                return $results;
             }
+        } catch (PDOException $e) {
+            throw new Exception("Unable to retrieve the booking(s): " . $e->getMessage());
         }
-        return $notFound;
     }
 
     public function Update($bookingId, $booking)
@@ -112,7 +103,7 @@ class BookingRepository
 
     public function BookingExist($b)
     {
-        $bookings = $this->Get();
+        $bookings = Booking::map($this->Get());
         foreach ($bookings as $booking) {
             if (Booking::AreEqual($booking, $b)) {
                 return true;

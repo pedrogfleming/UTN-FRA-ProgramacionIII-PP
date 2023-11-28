@@ -127,21 +127,25 @@ class Booking implements \JsonSerializable
     {
         $ret_arr = [];
         foreach ($arr as $obj) {
-            $newBooking = new Booking(
-                $obj->clientType,
-                $obj->clientId,
-                Booking::mapDate($obj->checkIn),
-                Booking::mapDate($obj->checkOut),
-                $obj->roomType,
-                intval($obj->totalBookingAmount)
-            );
-            $newBooking->setBookingId($obj->bookingId);
-            if(isset($obj->status)){
-                $newBooking->setStatus($obj->status);
-            }
+            $newBooking = Booking::mapObj($obj);
             array_push($ret_arr, $newBooking);
         }
         return $ret_arr;
+    }
+    public static function mapObj($obj){
+        $newBooking = new Booking(
+            $obj->clientType,
+            $obj->clientId,
+            Booking::mapDate($obj->checkIn),
+            Booking::mapDate($obj->checkOut),
+            $obj->roomType,
+            intval($obj->totalBookingAmount)
+        );
+        $newBooking->setBookingId($obj->bookingId);
+        if(isset($obj->status)){
+            $newBooking->setStatus($obj->status);
+        }
+        return $newBooking;
     }
 
     // Data can be sdclass from datetime or string with format Y-m-d 

@@ -83,10 +83,12 @@ class CustomerBooking
                 $dto->roomType,
                 $dto->totalBookingAmount
             );
+            $booking->setStatus("Reserved");
             if (!$this->ClientExistsById($booking->getClientId(), $booking->getClientType())) {
                 throw new Exception('Unable to book the room: client does not exist');
             } else if (!$this->_bookingRepository->BookingExist($booking)) {
-                $createdBooking =  $this->_bookingRepository->Create($booking);
+                $createdBookingId =  $this->_bookingRepository->Create($booking);
+                $createdBooking = Booking::mapObj($this->_bookingRepository->get($createdBookingId));
                 if (!empty($createdBooking)) {
                     $fileName = $createdBooking->getBookingId() . $createdBooking->getClientType() . $createdBooking->getClientId();
                     $statusImageUpload = $this->UploadImage($fileName);
@@ -141,7 +143,7 @@ class CustomerBooking
 
     public function ClientExistsById($clientId, $clientType)
     {
-        $clients = $this->_clientRepository->Get();
+        $clients = Client::map($this->_clientRepository->Get());
         foreach ($clients as $client) {
             if (
                 $client->getId() == $clientId &&

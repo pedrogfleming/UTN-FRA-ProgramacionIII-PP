@@ -4,15 +4,6 @@ require_once("../Models/Client.php");
 require_once "../database/dao.php";
 class ClientRepository
 {
-    private $_fileName;
-    private $_fileManager;
-    private $_base_id = "1000001";
-
-    public function __construct()
-    {
-        $this->_fileName = '../hoteles.json';
-        $this->_fileManager = new filesManager();
-    }
     public function Create($c)
     {
         try {
@@ -79,44 +70,6 @@ class ClientRepository
         } catch (PDOException $e) {
             throw new Exception("Error while performing delete operation: " . $e->getMessage());
         }
-    }
-    
-
-    private static function Arr_Update($clients, $client)
-    {
-        for ($i = 0; $i < count($clients); $i++) {
-            if (
-                $clients[$i]->getId() == $client->getId() &&
-                $clients[$i]->getClientType() == $client->getClientType()
-            ) {
-                $clients[$i] = $client;
-                return $clients;
-            }
-        }
-        return false;
-    }
-
-    private static function GetNextId($arr)
-    {
-        if (!empty($arr)) {
-            usort($arr, function ($a, $b) {
-                return $b->id - $a->id;
-            });
-            $ret = $arr[0]->id;
-            $ret++;
-            $ret = strval($ret);
-            return $ret;
-        }
-    }
-
-    private function SearchById($arr, $needle)
-    {
-        foreach ($arr as $client) {
-            if ($client->getId() == $needle) {
-                return $client;
-            }
-        }
-        return false;
     }
 
     public function ClientExist($c)
