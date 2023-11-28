@@ -1,17 +1,7 @@
 <?php
 require_once("../Models/Booking.php");
-require_once("filesManager.php");
 class BookingRepository
 {
-    private $_fileName;
-    private $_fileManager;
-    private $_base_id = "1";
-
-    public function __construct()
-    {
-        $this->_fileName = "../reservas.json";
-        $this->_fileManager = new filesManager();
-    }
     public function Create($b)
     {
         try {
@@ -62,45 +52,6 @@ class BookingRepository
         } catch (PDOException $e) {
             throw new Exception("Unable to modify the booking: " . $e->getMessage());
         }
-    }
-    
-
-    private static function Arr_Update($bookings, $booking)
-    {
-        for ($i = 0; $i < count($bookings); $i++) {
-            if (
-                $bookings[$i]->getBookingId() == $booking->getBookingId() &&
-                $bookings[$i]->getClientId() == $booking->getClientId() &&
-                $bookings[$i]->getClientType() == $booking->getClientType()
-            ) {
-                $bookings[$i] = $booking;
-                return $bookings;
-            }
-        }
-        return false;
-    }
-
-    private static function GetNextId($arr)
-    {
-        if (!empty($arr)) {
-            usort($arr, function ($a, $b) {
-                return $b->bookingId - $a->bookingId;
-            });
-            $ret = $arr[0]->bookingId;
-            $ret++;
-            $ret = strval($ret);
-            return $ret;
-        }
-    }
-
-    private function SearchById($arr, $needle)
-    {
-        foreach ($arr as $booking) {
-            if ($booking->getBookingId() == $needle) {
-                return $booking;
-            }
-        }
-        return false;
     }
 
     public function BookingExist($b)

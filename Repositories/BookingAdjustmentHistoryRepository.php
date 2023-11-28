@@ -1,55 +1,42 @@
 <?php
 require_once("../Models/BookingChange.php");
-require_once("filesManager.php");
 
 class BookingAdjustmentHistoryRepository
 {
-    private $_fileName;
-    private $_fileManager;
-    private $_base_id = "101";
-
-    public function __construct()
+    public function Create($bc)
     {
-        $this->_fileName = "../ajustes.json";
-        $this->_fileManager = new filesManager();
-    }
-
-    public function Create($bc){
-        if (file_exists($this->_fileName)){
-            $bookingsChanges = BookingChange::map($this->_fileManager->ReadJSON($this->_fileName));
-
-            if (!empty($bookingsChanges)) {
-                $nextId = BookingAdjustmentHistoryRepository::GetNextId($bookingsChanges);
-                $bc->setId($nextId);
-
-                array_push($bookingsChanges, $bc);
-                if ($this->_fileManager->SaveJSON($this->_fileName, $bookingsChanges)) {
-                    return $bc;
-                }
-            }
-        }
-        else{
-            $bc->setId($this->_base_id);
-            $bookingsChanges[0] = $bc;
-            if ($this->_fileManager->SaveJSON($this->_fileName, $bookingsChanges)) {
-                return $bc;
-            }
-            else{
+        try {
+            $objDAO = DAO::GetInstance();
+            $command = $objDAO->prepareQuery("INSERT INTO BookingChanges (bookingId, adjustmentReason, amountToAdjust) VALUES (?, ?, ?)");
+            $command->execute([$bc->getBookingId(), $bc->getAdjustmentReason(), $bc->getAmountToAdjust()]);
+            if ($command->rowCount() > 0) {
+                $bc->setId($objDAO->getLastId());
+                $bookingChange = BookingChange::mapObj($this->Get($objDAO->getLastId()));
+                return $bookingChange;
+            } else {
                 throw new Exception("Unable to register the booking change");
             }
+        } catch (PDOException $e) {
+            throw new Exception("Unable to register the booking change: " . $e->getMessage());
         }
     }
 
-    private static function GetNextId($arr)
+    public function Get($id)
     {
-        if (!empty($arr)) {
-            usort($arr, function ($a, $b) {
-                return $b->getId() - $a->getId();
-            });
-            $ret = $arr[0]->getId();
-            $ret++;
-            $ret = strval($ret);
-            return $ret;
+        try {
+            $objDAO = DAO::GetInstance();
+            $command = $objDAO->prepareQuery("SELECT * FROM BookingChanges WHERE id = ? AND isDeleted = 0");
+            $command->execute([$id]);
+            $result = $command->fetch(PDO::FETCH_OBJ);
+            if ($result) {
+                $bc = new BookingChange($result->bookingId, $result->adjustmentReason, $result->amountToAdjust);
+                $bc->setId($result->id);
+                return $bc;
+            } else {
+                throw new Exception("Booking change not found");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Unable to get the booking change: " . $e->getMessage());
         }
     }
 }

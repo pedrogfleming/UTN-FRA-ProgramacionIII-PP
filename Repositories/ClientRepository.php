@@ -1,5 +1,4 @@
 <?php
-require_once("filesManager.php");
 require_once("../Models/Client.php");
 require_once "../database/dao.php";
 class ClientRepository

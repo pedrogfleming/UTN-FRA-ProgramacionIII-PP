@@ -62,14 +62,19 @@ class BookingChange implements \JsonSerializable
     {
         $ret_arr = [];
         foreach ($arr as $obj) {
-            $newBookingChange = new BookingChange(
-                $obj->bookingId,
-                $obj->adjustmentReason,
-                $obj->amountToAdjust
-            );
-            $newBookingChange->setId($obj->id);
+            $newBookingChange = BookingChange::mapObj($obj);
             array_push($ret_arr, $newBookingChange);
         }
         return $ret_arr;
+    }
+
+    public static function mapObj($obj){
+        $newBookingChange = new BookingChange(
+            $obj->bookingId,
+            $obj->adjustmentReason,
+            $obj->amountToAdjust
+        );
+        $newBookingChange->setId($obj->id);
+        return $newBookingChange;
     }
 }
