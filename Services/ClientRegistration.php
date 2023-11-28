@@ -25,9 +25,12 @@ class ClientRegistration
                 $clientDTO->paymentMethod
             );
             if (!$this->_clientRepository->ClientExist($newClient)) {
-                $createdClient =  $this->_clientRepository->Create($newClient);
-                if (!empty($createdClient) && isset($createdClient[0])) {
-                    $fileName = $createdClient[0]->getId() . $createdClient[0]->getClientType();
+                $idCreatedClient = $this->_clientRepository->Create($newClient);
+                $createdClientData = $this->_clientRepository->Get($idCreatedClient);
+                if (!empty($createdClientData)) {
+                    $clients = [];
+                    array_push($clients, $createdClientData);
+                    $createdClient = Client::map($clients);
                     $statusImageUpload = $this->UploadImage($fileName);
                     if ($statusImageUpload->success) {
                         return $createdClient;

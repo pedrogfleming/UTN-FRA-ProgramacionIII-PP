@@ -1,6 +1,7 @@
 <?php
 require_once("filesManager.php");
 require_once("../Models/Client.php");
+require_once "../database/dao.php";
 class ClientRepository
 {
     private $_fileName;
@@ -14,46 +15,41 @@ class ClientRepository
     }
     public function Create($c)
     {
-        $clients = file_exists($this->_fileName) ? $this->_fileManager->ReadJSON($this->_fileName) : array();
-        if (!empty($clients)) {
-            $nextId = ClientRepository::GetNextId($clients);
-            $c->SetId($nextId);
-
-            array_push($clients, $c);
-            if ($this->_fileManager->SaveJSON($this->_fileName, $clients)) {
-                return $this->Get($nextId);
-            }
-        } else {
-            $c->SetId($this->_base_id);
-            $clients[0] = $c;
-            if ($this->_fileManager->SaveJSON($this->_fileName, $clients)) {
-                $ret = $this->Get($c->GetId());
-                return $ret;
-            } else {
-                throw new Exception("Unable to register the client");
-            }
+        try {
+            $objDAO = DAO::GetInstance();
+            $command = $objDAO->prepareQuery("INSERT INTO Clients (name, lastName, documentType, documentNumber, email, clientType, country, city, phoneNumber, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            $command->execute([$c->getName(), $c->getLastName(), $c->getDocumentType(), $c->getDocumentNumber(), $c->getEmail(), $c->getClientType(), $c->getCountry(), $c->getCity(), $c->getPhoneNumber(), $c->getPaymentMethod()]);
+            return $objDAO->getLastId();
+        } catch (PDOException $e) {
+            throw new Exception("Unable to register the client: " . $e->getMessage());
         }
     }
 
     public function Get($id = null)
     {
-        $notFound =  array();
-        if (file_exists($this->_fileName)) {
-            $allClients = Client::map($this->_fileManager->ReadJSON($this->_fileName));
+        try {
+            $objDAO = DAO::GetInstance();
             if (isset($id)) {
-                $foundedClient[0] = $this->SearchById($allClients, $id);
-                if ($foundedClient[0] !== false) {
-                    return $foundedClient;
+                $command = $objDAO->prepareQuery("SELECT * FROM Clients WHERE id = ? AND isDeleted = 0");
+                $command->execute([$id]);
+                $result = $command->fetch(PDO::FETCH_OBJ);
+                if ($result) {
+                    return $result;
                 } else {
-                    return $notFound;
+                    throw new Exception("Client not found");
                 }
             } else {
-                return $allClients;
+                $command = $objDAO->prepareQuery("SELECT * FROM Clients WHERE isDeleted = 0");
+                $command->execute();
+                $results = $command->fetchAll(PDO::FETCH_OBJ);
+                return $results;
             }
-        } else {
-            return $notFound;
+        } catch (PDOException $e) {
+            throw new Exception("Unable to retrieve the client(s): " . $e->getMessage());
         }
     }
+    
+    
 
     public function Update($client)
     {
