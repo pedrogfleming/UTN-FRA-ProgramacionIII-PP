@@ -1,5 +1,5 @@
 <?php
-require_once("./Services/CustomerBooking.php");
+require_once("../Services/CustomerBooking.php");
 class RoomController
 {
     public function Book($dto)

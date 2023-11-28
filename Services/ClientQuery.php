@@ -1,4 +1,5 @@
 <?php
+require_once "../Repositories/ClientRepository.php";
 class ClientQuery
 {
     private $_clientRepository;
@@ -10,6 +11,7 @@ class ClientQuery
     // Partial data = Show only country, city, client phone number
     public function Get($id = null, $clientType = null, $partialData = false)
     {
+        $result = new stdClass();
         $clients = $this->_clientRepository->Get($id);
         if (isset($id) && empty($clients)) {
             throw new Exception('Client not found: client id dont match any client number');
@@ -32,6 +34,7 @@ class ClientQuery
                 return $c;
             }, $clients);
         }
-        return $clients;
+        $result->clients = $clients;
+        return $result;
     }
 }

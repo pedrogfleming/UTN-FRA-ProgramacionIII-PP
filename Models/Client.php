@@ -21,21 +21,20 @@ class Client implements \JsonSerializable
         $this->documentType = $documentType;
         $this->documentNumber = $documentNumber;
         $this->email = $email;
-        if(str_contains($clientType, '-')){
+        if (str_contains($clientType, '-')) {
             $this->clientType = $clientType;
-        }
-        else{
+        } else {
             $this->setClientType($clientType);
         }
 
         $this->country = $country;
         $this->city = $city;
         $this->phoneNumber = $phoneNumber;
-        $this->id = $id;    
+        $this->id = $id;
         $this->paymentMethod = $paymentMethod;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
     }
@@ -161,9 +160,9 @@ class Client implements \JsonSerializable
         $ret_arr = [];
 
         foreach ($arr as $obj) {
-            $isDeleted = property_exists($obj,'isDeleted');
+            $isDeleted = property_exists($obj, 'isDeleted');
             $isDeleted = $isDeleted ? $obj->isDeleted : false;
-            if(!$isDeleted){
+            if (!$isDeleted) {
                 $newClient = new Client(
                     $obj->name,
                     $obj->lastName,

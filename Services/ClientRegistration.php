@@ -1,5 +1,5 @@
 <?php
-require_once("./Repositories/ClientRepository.php");
+require_once("../Repositories/ClientRepository.php");
 class ClientRegistration
 {
     private $_clientRepository;

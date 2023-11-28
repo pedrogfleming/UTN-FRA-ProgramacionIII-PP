@@ -1,6 +1,6 @@
 <?php
 require_once("filesManager.php");
-require_once("./Models/Client.php");
+require_once("../Models/Client.php");
 class ClientRepository
 {
     private $_fileName;
@@ -9,7 +9,7 @@ class ClientRepository
 
     public function __construct()
     {
-        $this->_fileName = "./hoteles.json";
+        $this->_fileName = '../hoteles.json';
         $this->_fileManager = new filesManager();
     }
     public function Create($c)
