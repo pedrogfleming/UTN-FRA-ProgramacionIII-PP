@@ -38,6 +38,8 @@ $app->get('/hello', function ($request, $response, array $args) {
 $app->group('/client', function (RouteCollectorProxy $group) {
     $group->post('[/]', \ClientController::class . ':Create');
     $group->get('[/]', \ClientController::class . ':Get');
+    $group->put('/{client}', \ClientController::class . ':Update');
+    $group->delete('/{client}', \ClientController::class. ':Delete');
 });
 
 $app->run();

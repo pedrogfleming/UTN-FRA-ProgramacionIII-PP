@@ -1,4 +1,5 @@
 <?php
+require_once("../Repositories/ClientRepository.php");
 class ClientDelete
 {
     private $_clientRepository;
@@ -16,8 +17,8 @@ class ClientDelete
             if ($clientDeleted) {
                 $fileName = $targetClient[0]->getId() . $targetClient[0]->getClientType();
 
-                $sourcePath = 'ImagenesDeClientes/2023/' . $fileName;
-                $destinationPath = 'ImagenesBackupClientes/2023/' . $fileName; // Ruta completa de la nueva ubicación
+                $sourcePath = '../ImagenesDeClientes/2023/' . $fileName;
+                $destinationPath = '../ImagenesBackupClientes/2023/' . $fileName; // Ruta completa de la nueva ubicación
 
                 if (!rename($sourcePath, $destinationPath)) {
                     throw new Exception("Couldnt move the photo of the deleted client to the backup location");

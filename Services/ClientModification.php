@@ -1,4 +1,5 @@
 <?php
+require_once("../Repositories/ClientRepository.php");
 class ClientModification
 {
     private $_clientRepository;
