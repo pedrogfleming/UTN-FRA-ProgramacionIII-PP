@@ -12,7 +12,10 @@ class ClientDelete
     {
         require_once("../Models/Client.php");
         $targetClient = $this->_clientRepository->Get($clientDTO->clientId);
-        if (!empty($targetClient) && isset($targetClient[0])) {
+        if (!empty($targetClient)) {
+            $clients = [];
+            array_push($clients, $targetClient);
+            $targetClient = Client::map($clients);
             $clientDeleted = $this->_clientRepository->Delete($targetClient[0]->getId(), $targetClient[0]->getClientType());
             if ($clientDeleted) {
                 $fileName = $targetClient[0]->getId() . $targetClient[0]->getClientType();

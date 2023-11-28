@@ -65,29 +65,22 @@ class ClientRepository
         }
     }
 
-
     public function Delete($clientId, $clientType)
     {
-        $clients = $this->Get();
-        $deleted = false;
-        for ($i = 0; $i < count($clients); $i++) {
-            if (
-                $clients[$i]->getId() == $clientId &&
-                $clients[$i]->getClientType() == $clientType
-            ) {
-                $clients[$i]->isDeleted = true;
-                $deleted = true;
+        try {
+            $objDAO = DAO::GetInstance();
+            $command = $objDAO->prepareQuery("UPDATE Clients SET isDeleted = 1 WHERE id = ? AND clientType = ? AND isDeleted = 0");
+            $command->execute([$clientId, $clientType]);
+            if ($command->rowCount() > 0) {
+                return true;
+            } else {
+                throw new Exception("Client id and type combination couldn't be found or client is already deleted");
             }
+        } catch (PDOException $e) {
+            throw new Exception("Error while performing delete operation: " . $e->getMessage());
         }
-        if ($deleted) {
-            if (!$this->_fileManager->SaveJSON($this->_fileName, $clients)) {
-                throw new Exception("Error while saving deleted client operation");
-            }
-        } else {
-            throw new Exception("Client id and type combination couldnt be found");
-        }
-        return $deleted;
     }
+    
 
     private static function Arr_Update($clients, $client)
     {
