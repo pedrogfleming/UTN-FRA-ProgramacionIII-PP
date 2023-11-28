@@ -38,4 +38,27 @@ class UserRegistration
             }
         }
     }
+    public function Login($username, $password)
+    {
+        require_once("../Models/User.php");
+        if (isset($username) && isset($password)) {
+            $users = User::map($this->_userRepository->Get());
+            $existingUser = array_filter($users, function ($user) use ($username) {
+                return $user->username == $username;
+            });
+    
+            if (!empty($existingUser)) {
+                $existingUser = array_values($existingUser)[0];
+                if (password_verify($password, $existingUser->password)) {
+                    return true;
+                } else {
+                    throw new Exception('Invalid password');
+                }
+            } else {
+                throw new Exception('Invalid username');
+            }
+        } else {
+            throw new Exception('Username and password must be provided');
+        }
+    }
 }
