@@ -43,4 +43,16 @@ $app->group('/booking', function (RouteCollectorProxy $group) {
     $group->delete('/{booking}', \RoomController::class. ':Delete');
 });
 
+// $app->get('/hello', function ($request, $response, array $args) {
+//     try {
+//         require_once "../database/dao.php";
+//         $dao = DAO::getInstance();
+//         $response->getBody()->write('Funciona!');
+//         return $response;
+//     } catch (\Throwable $th) {
+//         $payload = json_encode(array("err" => $th->getMessage()));
+//         $response->getBody()->write($payload);
+//         return $response->withHeader('Content-Type', 'application/json');
+//     }
+// });
 $app->run();
