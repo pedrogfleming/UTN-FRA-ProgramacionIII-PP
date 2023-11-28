@@ -108,15 +108,32 @@ class RoomController
         }
     }
 
-    public function Cancel($dto)
+    public function Delete($request, $response, $args)
     {
         try {
-            $customerBooking = new CustomerBooking();
-            return $customerBooking->CancelBooking($dto);
+            $params = $request->getParsedBody();
+            if (
+                isset($params["clientId"]) &&
+                isset($params["clientType"]) &&
+                isset($args["booking"])
+            ) {
+                $dto = new stdClass;
+                $dto->clientId = $params["clientId"];
+                $dto->clientType = $params["clientType"];
+                $dto->bookingId = $args["booking"];
+
+                $customerBooking = new CustomerBooking();
+                $result = $customerBooking->CancelBooking($dto);
+                $payload = json_encode(array($result));
+                $response->getBody()->write($payload);
+                return $response->withHeader('Content-Type', 'application/json');
+            } else {
+                throw new Exception("Missing arguments on request");
+            }
         } catch (\Throwable $th) {
-            $response = new stdClass();
-            $response->err = $th->getMessage();
-            return $response;
+            $payload = json_encode(array("err" => $th->getMessage()));
+            $response->getBody()->write($payload);
+            return $response->withHeader('Content-Type', 'application/json');
         }
     }
 }

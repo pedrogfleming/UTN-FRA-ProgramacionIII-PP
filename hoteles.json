@@ -10,8 +10,7 @@
         "country": "Paraguay",
         "city": "Asuncion",
         "phoneNumber": "+541112348080",
-        "paymentMethod": "efectivo",
-        "isDeleted": true
+        "paymentMethod": "efectivo"
     },
     {
         "id": "1000002",
