@@ -110,9 +110,8 @@ class ClientRepository
     private static function GetNextId($arr)
     {
         if (!empty($arr)) {
-            //get the id of the last Client stored in the json and add 1 to increment the id of the new Client.
             usort($arr, function ($a, $b) {
-                return $a->id < $b->id;
+                return $b->id - $a->id;
             });
             $ret = $arr[0]->id;
             $ret++;

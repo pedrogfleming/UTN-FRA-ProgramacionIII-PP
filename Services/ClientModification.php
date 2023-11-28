@@ -7,7 +7,7 @@ class ClientModification
         $this->_clientRepository = new ClientRepository();        
     }
     public function Update($clientDTO){
-        require_once("./Models/Client.php");
+        require_once("../Models/Client.php");
         $targetClient = new Client($clientDTO->name, $clientDTO->lastName, $clientDTO->documentType, $clientDTO->documentNumber, $clientDTO->email, $clientDTO->clientType, $clientDTO->country, $clientDTO->city, $clientDTO->phoneNumber);
         $targetClient->setId($clientDTO->clientId);
 

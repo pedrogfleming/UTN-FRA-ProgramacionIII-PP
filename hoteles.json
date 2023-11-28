@@ -26,7 +26,7 @@
         "paymentMethod": "efectivo"
     },
     {
-        "id": "1000005",
+        "id": "1000003",
         "name": "Marcelo",
         "lastName": "Tinelli",
         "documentType": "Dni",
@@ -36,7 +36,6 @@
         "country": "Argentina",
         "city": "Boedo",
         "phoneNumber": "+541112349091",
-        "paymentMethod": "tarjeta",
-        "isDeleted": true
+        "paymentMethod": "tarjeta"
     }
 ]

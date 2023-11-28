@@ -1,5 +1,5 @@
 <?php
-require_once("./Models/BookingChange.php");
+require_once("../Models/BookingChange.php");
 require_once("filesManager.php");
 
 class BookingAdjustmentHistoryRepository

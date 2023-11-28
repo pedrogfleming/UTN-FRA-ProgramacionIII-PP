@@ -36,8 +36,8 @@ $app->get('/hello', function ($request, $response, array $args) {
 });
 
 $app->group('/client', function (RouteCollectorProxy $group) {
-    $group->post('/', \ClientController::class . ':Create');
-    $group->get('/', \ClientController::class . ':Get');
+    $group->post('[/]', \ClientController::class . ':Create');
+    $group->get('[/]', \ClientController::class . ':Get');
 });
 
 $app->run();

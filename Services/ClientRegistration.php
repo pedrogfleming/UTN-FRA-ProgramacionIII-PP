@@ -9,7 +9,7 @@ class ClientRegistration
     }
     public function RegisterClient($clientDTO)
     {
-        require_once("./Models/Client.php");
+        require_once("../Models/Client.php");
         if (isset($clientDTO)) {
             $newClient = new Client(
                 $clientDTO->name,
@@ -47,7 +47,7 @@ class ClientRegistration
     {
         $ret = new stdClass;
         // The folder must be created before
-        $file_folder = 'ImagenesDeClientes/2023/';
+        $file_folder = '../ImagenesDeClientes/2023/';
 
         // Data from the file sent by POST
         $file_type =  $_FILES['userImage']['type'];

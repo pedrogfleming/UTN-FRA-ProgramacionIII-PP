@@ -2,9 +2,9 @@
 require_once("../Repositories/BookingRepository.php");
 require_once("../Repositories/ClientRepository.php");
 require_once("../Repositories/BookingAdjustmentHistoryRepository.php");
-require_once("./Models/Client.php");
-require_once("./Models/Booking.php");
-require_once("./Models/BookingChange.php");
+require_once("../Models/Client.php");
+require_once("../Models/Booking.php");
+require_once("../Models/BookingChange.php");
 
 class CustomerBooking
 {

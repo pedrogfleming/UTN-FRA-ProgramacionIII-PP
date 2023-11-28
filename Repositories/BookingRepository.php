@@ -1,5 +1,5 @@
 <?php
-require_once("./Models/Booking.php");
+require_once("../Models/Booking.php");
 require_once("filesManager.php");
 class BookingRepository
 {

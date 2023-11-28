@@ -9,7 +9,7 @@ class ClientDelete
     }
     public function Delete($clientDTO)
     {
-        require_once("./Models/Client.php");
+        require_once("../Models/Client.php");
         $targetClient = $this->_clientRepository->Get($clientDTO->clientId);
         if (!empty($targetClient) && isset($targetClient[0])) {
             $clientDeleted = $this->_clientRepository->Delete($targetClient[0]->getId(), $targetClient[0]->getClientType());
