@@ -12,8 +12,8 @@ use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
 
 require_once("../Controllers/ClientController.php");
+require_once("../Controllers/RoomController.php");
 // require_once("./Helpers/statusCodeHelper.php");
-// require_once("./Controllers/RoomController.php");
 
 // Load ENV
 // $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -40,6 +40,13 @@ $app->group('/client', function (RouteCollectorProxy $group) {
     $group->get('[/]', \ClientController::class . ':Get');
     $group->put('/{client}', \ClientController::class . ':Update');
     $group->delete('/{client}', \ClientController::class. ':Delete');
+});
+
+$app->group('/booking', function (RouteCollectorProxy $group) {
+    // $group->post('[/]', \RoomController::class . ':Create');
+    $group->get('[/]', \RoomController::class . ':Get');
+    // $group->put('/{booking}', \RoomController::class . ':Update');
+    // $group->delete('/{booking}', \RoomController::class. ':Delete');
 });
 
 $app->run();

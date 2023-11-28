@@ -26,7 +26,7 @@ class Booking implements \JsonSerializable
         $this->totalBookingAmount = $totalBookingAmount;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() : mixed
     {
         return get_object_vars($this);
     }

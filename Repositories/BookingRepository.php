@@ -9,7 +9,7 @@ class BookingRepository
 
     public function __construct()
     {
-        $this->_fileName = "./reservas.json";
+        $this->_fileName = "../reservas.json";
         $this->_fileManager = new filesManager();
     }
     public function Create($b)

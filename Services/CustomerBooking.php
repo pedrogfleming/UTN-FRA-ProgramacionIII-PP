@@ -62,7 +62,7 @@ class CustomerBooking
 
         // order by checkin date
         usort($bookings, function ($a, $b) {
-            return $a->getCheckIn() > $b->getCheckIn();
+            return $a->getCheckIn() <=> $b->getCheckIn();
         });
 
         $ret->bookings = $bookings;
