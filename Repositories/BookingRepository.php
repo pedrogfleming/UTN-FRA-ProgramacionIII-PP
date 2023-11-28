@@ -48,20 +48,22 @@ class BookingRepository
         }
     }
 
-    public function Update($bookingId, $booking)
+    public function Update($booking)
     {
-        $bookings = $this->Get();
-        $newListBookingModified = BookingRepository::Arr_Update($bookings, $booking);
-        if ($newListBookingModified !== false && count($newListBookingModified) > 0) {
-            if ($this->_fileManager->SaveJSON($this->_fileName, $newListBookingModified)) {
-                return $this->Get($bookingId);
+        try {
+            $objDAO = DAO::GetInstance();
+            $command = $objDAO->prepareQuery("UPDATE Bookings SET clientType = ?, clientId = ?, checkIn = ?, checkOut = ?, roomType = ?, totalBookingAmount = ?, status = ? WHERE bookingId = ? AND isDeleted = 0");
+            $command->execute([$booking->getClientType(), $booking->getClientId(), $booking->getCheckIn(), $booking->getCheckOut(), $booking->getRoomType(), $booking->getTotalBookingAmount(), $booking->getStatus(), $booking->getBookingId()]);
+            if ($command->rowCount() > 0) {
+                return $this->Get($booking->getBookingId());
             } else {
-                throw new Exception("Unable to modify the booking");
+                throw new Exception("Unable to modify the booking or booking not found");
             }
-        } else {
-            throw new Exception("Booking not found");
+        } catch (PDOException $e) {
+            throw new Exception("Unable to modify the booking: " . $e->getMessage());
         }
     }
+    
 
     private static function Arr_Update($bookings, $booking)
     {

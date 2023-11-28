@@ -123,12 +123,12 @@ class CustomerBooking
 
     public function UpdateAmount($dto)
     {
-        $booking = $this->_bookingRepository->Get($dto->bookingId);
+        $booking = Booking::mapObj($this->_bookingRepository->Get($dto->bookingId));
         if (!empty($booking) && is_object($booking)) {
             $booking->setStatus('Modificada');
             $booking->setTotalBookingAmount(intval($dto->amountToAdjust));
-            $modifiedBooking = $this->_bookingRepository->Update($dto->bookingId, $booking);
-            if (is_object($modifiedBooking) && $modifiedBooking->getBookingId() === $dto->bookingId) {
+            $modifiedBooking = Booking::mapObj($this->_bookingRepository->Update($booking));
+            if (is_object($modifiedBooking) && $modifiedBooking->getBookingId() == $dto->bookingId) {
                 $bookingChange = new BookingChange(
                     $dto->bookingId,
                     $dto->adjustmentReason,
