@@ -48,22 +48,23 @@ class ClientRepository
             throw new Exception("Unable to retrieve the client(s): " . $e->getMessage());
         }
     }
-    
-    
 
     public function Update($client)
     {
-        $newListClientModified = ClientRepository::Arr_Update($this->Get(), $client);
-        if ($newListClientModified !== false && count($newListClientModified) > 0) {
-            if ($this->_fileManager->SaveJSON($this->_fileName, $newListClientModified)) {
+        try {
+            $objDAO = DAO::GetInstance();
+            $command = $objDAO->prepareQuery("UPDATE Clients SET name = ?, lastName = ?, documentType = ?, documentNumber = ?, email = ?, clientType = ?, country = ?, city = ?, phoneNumber = ?, paymentMethod = ? WHERE id = ? AND isDeleted = 0");
+            $command->execute([$client->getName(), $client->getLastName(), $client->getDocumentType(), $client->getDocumentNumber(), $client->getEmail(), $client->getClientType(), $client->getCountry(), $client->getCity(), $client->getPhoneNumber(), $client->getPaymentMethod(), $client->getId()]);
+            if ($command->rowCount() > 0) {
                 return $this->Get($client->getId());
             } else {
-                throw new Exception("Unable to modify the client");
+                throw new Exception("Unable to modify the client or client not found");
             }
-        } else {
-            throw new Exception("Client not found");
+        } catch (PDOException $e) {
+            throw new Exception("Unable to modify the client: " . $e->getMessage());
         }
     }
+
 
     public function Delete($clientId, $clientType)
     {
@@ -78,12 +79,11 @@ class ClientRepository
                 $deleted = true;
             }
         }
-        if($deleted){
+        if ($deleted) {
             if (!$this->_fileManager->SaveJSON($this->_fileName, $clients)) {
                 throw new Exception("Error while saving deleted client operation");
             }
-        }
-        else{
+        } else {
             throw new Exception("Client id and type combination couldnt be found");
         }
         return $deleted;
@@ -128,7 +128,7 @@ class ClientRepository
 
     public function ClientExist($c)
     {
-        $clients = $this->Get();
+        $clients = Client::map($this->Get());
         foreach ($clients as $client) {
             if (Client::AreEqual($client, $c)) {
                 return true;

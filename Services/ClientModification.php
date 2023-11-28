@@ -9,10 +9,12 @@ class ClientModification
     }
     public function Update($clientDTO){
         require_once("../Models/Client.php");
-        $targetClient = new Client($clientDTO->name, $clientDTO->lastName, $clientDTO->documentType, $clientDTO->documentNumber, $clientDTO->email, $clientDTO->clientType, $clientDTO->country, $clientDTO->city, $clientDTO->phoneNumber);
+        $targetClient = new Client($clientDTO->name, $clientDTO->lastName, $clientDTO->documentType, $clientDTO->documentNumber, $clientDTO->email, $clientDTO->clientType, $clientDTO->country, $clientDTO->city, $clientDTO->phoneNumber, null, $clientDTO->paymentMethod);
         $targetClient->setId($clientDTO->clientId);
 
         $clientModified = $this->_clientRepository->Update($targetClient);
-        return $clientModified;
+        $result = [];
+        array_push($result, $clientModified);
+        return Client::map($result);
     }
 }

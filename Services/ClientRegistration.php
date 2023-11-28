@@ -31,6 +31,7 @@ class ClientRegistration
                     $clients = [];
                     array_push($clients, $createdClientData);
                     $createdClient = Client::map($clients);
+                    $fileName = $createdClient[0]->getId() . $createdClient[0]->getClientType();
                     $statusImageUpload = $this->UploadImage($fileName);
                     if ($statusImageUpload->success) {
                         return $createdClient;
