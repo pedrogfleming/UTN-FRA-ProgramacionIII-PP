@@ -98,6 +98,19 @@ class DAO
             )
             SQL;
             $this->PDOobject->exec($create_table_access_logs);
+
+            $create_table_transaction_logs = <<<SQL
+            CREATE TABLE IF NOT EXISTS Transactions (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                user INT NOT NULL,
+                requestBody TEXT,
+                requestQueryParams TEXT,
+                responseBody TEXT,
+                FOREIGN KEY (user) REFERENCES Users(id)
+            )
+            SQL;
+            $this->PDOobject->exec($create_table_transaction_logs);
         } catch (PDOException $e) {
             throw new Exception("Connection failed: " . $e->getMessage());
         }
