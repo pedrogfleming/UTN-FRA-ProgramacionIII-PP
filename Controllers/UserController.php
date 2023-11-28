@@ -34,35 +34,6 @@ class UserController
             return $response->withHeader('Content-Type', 'application/json');
         }
     }
-
-    public function Get($request, $response, $args)
-    {
-        require_once("../Services/UserQuery.php");
-        try {
-            $queryParams = $request->getQueryParams();
-            if (
-                isset($queryParams['userId']) &&
-                isset($queryParams["userRole"])
-            ) {
-                $dto = new stdClass();
-                $dto->userId = $queryParams["userId"];
-                $dto->userRole = $queryParams["userRole"];
-
-                $userQuery = new UserQuery();
-                $result = $userQuery->Get($dto->userId, $dto->userRole, true);
-                $payload = json_encode(array($result));
-                $response->getBody()->write($payload);
-                return $response->withHeader('Content-Type', 'application/json');
-            } else {
-                throw new Exception("Missing arguments on request");
-            }
-        } catch (\Throwable $th) {
-            $payload = json_encode(array("err" => $th->getMessage()));
-            $response->getBody()->write($payload);
-            return $response->withHeader('Content-Type', 'application/json');
-        }
-    }
-
     public function Update($request, $response, $args)
     {
         try {
@@ -103,16 +74,14 @@ class UserController
             require_once("../Services/UserDeletion.php");
             $params = $request->getParsedBody();
             if (
-                isset($params["userId"]) &&
-                isset($params["userRole"])
+                isset($params["username"])
             ) {
                 $dto = new stdClass;
-                $dto->userId = $params["userId"];
-                $dto->userRole = $params["userRole"];
+                $dto->username = $params["username"];
 
                 $userDeletion = new UserDeletion();
                 $result = $userDeletion->DeleteUser($dto);
-                $payload = json_encode(array($result));
+                $payload = json_encode(array("operation result" => $result));
                 $response->getBody()->write($payload);
                 return $response->withHeader('Content-Type', 'application/json');
             } else {

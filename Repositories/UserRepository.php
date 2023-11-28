@@ -57,16 +57,16 @@ class UserRepository
         }
     }
 
-    public function Delete($userId, $userRole)
+    public function Delete($userId)
     {
         try {
             $objDAO = DAO::GetInstance();
-            $command = $objDAO->prepareQuery("UPDATE Users SET isDeleted = 1 WHERE id = ? AND role = ? AND isDeleted = 0");
-            $command->execute([$userId, $userRole]);
+            $command = $objDAO->prepareQuery("UPDATE Users SET isDeleted = 1 WHERE id = ? AND isDeleted = 0");
+            $command->execute([$userId]);
             if ($command->rowCount() > 0) {
                 return true;
             } else {
-                throw new Exception("User id and role combination couldn't be found or user is already deleted");
+                throw new Exception("User id couldn't be found or user is already deleted");
             }
         } catch (PDOException $e) {
             throw new Exception("Error while performing delete operation: " . $e->getMessage());

@@ -34,4 +34,10 @@ class User {
         $newUser->id = $obj->id;
         return $newUser;
     }
+
+    public static function AreEqual($user1, $user2)
+    {
+        return $user1->username == $user2->username;
+    }
+    
 }
