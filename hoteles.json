@@ -1,1 +1,42 @@
-[{"id":"1000001","name":"Moria","lastName":"Casan","documentType":"Dni","documentNumber":"0000000001","email":"momo-casan-modifcado@example.com","clientType":"Coorporativo-Dni","country":"Paraguay","city":"Asuncion","phoneNumber":"+541112348080","paymentMethod":"efectivo","isDeleted":true},{"id":"1000002","name":"Carmen","lastName":"Barbieri","documentType":"Dni","documentNumber":"000000020","email":"carmen-barbieri@example.com","clientType":"Coorporativo-Dni","country":"Argentina","city":"Buenos Aires","phoneNumber":"+541112348081","paymentMethod":"efectivo"},{"id":"1000003","name":"Marcelo","lastName":"Tinelli","documentType":"Dni","documentNumber":"39183549","email":"marcelo-tinelli@example.com","clientType":"Single-Dni","country":"Argentina","city":"Boedo","phoneNumber":"+541112349091","paymentMethod":"tarjeta"}]
+[
+    {
+        "id": "1000001",
+        "name": "Moria",
+        "lastName": "Casan",
+        "documentType": "Dni",
+        "documentNumber": "0000000001",
+        "email": "momo-casan-modifcado@example.com",
+        "clientType": "Coorporativo-Dni",
+        "country": "Paraguay",
+        "city": "Asuncion",
+        "phoneNumber": "+541112348080",
+        "paymentMethod": "efectivo",
+        "isDeleted": true
+    },
+    {
+        "id": "1000002",
+        "name": "Carmen",
+        "lastName": "Barbieri",
+        "documentType": "Dni",
+        "documentNumber": "000000020",
+        "email": "carmen-barbieri@example.com",
+        "clientType": "Coorporativo-Dni",
+        "country": "Argentina",
+        "city": "Buenos Aires",
+        "phoneNumber": "+541112348081",
+        "paymentMethod": "efectivo"
+    },
+    {
+        "id": "1000003",
+        "name": "Marcelo",
+        "lastName": "Tinelli",
+        "documentType": "Dni",
+        "documentNumber": "39183549",
+        "email": "marcelo-tinelli@example.com",
+        "clientType": "Single-Dni",
+        "country": "Argentina",
+        "city": "Boedo",
+        "phoneNumber": "+541112349091",
+        "paymentMethod": "tarjeta"
+    }
+]

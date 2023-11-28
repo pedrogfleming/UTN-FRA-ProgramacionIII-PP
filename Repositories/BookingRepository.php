@@ -90,9 +90,8 @@ class BookingRepository
     private static function GetNextId($arr)
     {
         if (!empty($arr)) {
-            //get the id of the last booking stored in the json and add 1 to increment the id of the new booking.
             usort($arr, function ($a, $b) {
-                return $a->bookingId < $b->bookingId;
+                return $b->bookingId - $a->bookingId;
             });
             $ret = $arr[0]->bookingId;
             $ret++;

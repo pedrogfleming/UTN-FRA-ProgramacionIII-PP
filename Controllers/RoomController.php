@@ -2,22 +2,41 @@
 require_once("../Services/CustomerBooking.php");
 class RoomController
 {
-    public function Book($dto)
+    public function Book($request, $response, $args)
     {
         try {
-            $customerBooking = new CustomerBooking();
-            return $customerBooking->ReserveRoom($dto);
+            $params = $request->getParsedBody();
+            if (
+                isset($params["clientType"]) &&
+                isset($params["clientId"]) &&
+                isset($params["checkIn"]) &&
+                isset($params["checkOut"]) &&
+                isset($params["roomType"]) &&
+                isset($params["totalBookingAmount"])
+            ) {
+                $dto = new stdClass;
+                $dto->clientType = $params["clientType"];
+                $dto->clientId = $params["clientId"];
+                $dto->checkIn = $params["checkIn"];
+                $dto->checkOut = $params["checkOut"];
+                $dto->roomType = $params["roomType"];
+                $dto->totalBookingAmount = $params["totalBookingAmount"];
+    
+                $customerBooking = new CustomerBooking();
+                $result = $customerBooking->ReserveRoom($dto);
+                $payload = json_encode(array($result));
+                $response->getBody()->write($payload);
+                return $response->withHeader('Content-Type', 'application/json');
+            }
         } catch (\Throwable $th) {
-            $response = new stdClass();
-            $response->err = $th->getMessage();
-            return $response;
+            $payload = json_encode(array("err" => $th->getMessage()));
+            $response->getBody()->write($payload);
+            return $response->withHeader('Content-Type', 'application/json');
         }
     }
 
     public function Get($request, $response, $args)
     {
-
-
         try {
             $queryParams = $request->getQueryParams();
             if (

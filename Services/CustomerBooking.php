@@ -156,7 +156,7 @@ class CustomerBooking
     {
         $ret = new stdClass;
         // The folder must be created before
-        $file_folder = 'ImagenesDeReservas/2023/';
+        $file_folder = '../ImagenesDeReservas/2023/';
 
         // Data from the file sent by POST
         $file_type =  $_FILES['bookingImage']['type'];
