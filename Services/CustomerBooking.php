@@ -20,7 +20,7 @@ class CustomerBooking
     public function Get($searchCriteria)
     {
         $ret = new stdClass();
-        $bookings = $this->_bookingRepository->Get();
+        $bookings = Booking::map($this->_bookingRepository->Get());
 
         // Filter by cancelled bookings
         if(isset($searchCriteria->onlyCanceled)){
