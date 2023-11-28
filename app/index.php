@@ -45,7 +45,7 @@ $app->group('/client', function (RouteCollectorProxy $group) {
 $app->group('/booking', function (RouteCollectorProxy $group) {
     $group->post('[/]', \RoomController::class . ':Book');
     $group->get('[/]', \RoomController::class . ':Get');
-    // $group->put('/{booking}', \RoomController::class . ':Update');
+    $group->put('/{booking}', \RoomController::class . ':Update');
     // $group->delete('/{booking}', \RoomController::class. ':Delete');
 });
 

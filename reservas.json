@@ -1,1 +1,212 @@
-[{"bookingId":"1","clientType":"Coorporativo","clientId":"1000001","checkIn":"2023-10-30","checkOut":"2023-11-05","roomType":"Single","totalBookingAmount":3000,"status":"Modificada"},{"bookingId":"99","clientType":"Individual","clientId":"1000001","checkIn":"2023-01-30","checkOut":"2023-02-05","roomType":"Single","totalBookingAmount":300,"status":"Cancelled"},{"bookingId":"100","clientType":"Individual","clientId":"1000001","checkIn":"2023-02-01","checkOut":"2023-02-24","roomType":"Single","totalBookingAmount":2000,"status":null},{"bookingId":"101","clientType":"Coorporativo","clientId":"1000001","checkIn":"2023-09-25","checkOut":"2023-10-09","roomType":"Single","totalBookingAmount":1000,"status":"Cancelled"},{"bookingId":"2","clientType":"Coorporativo","clientId":"1000002","checkIn":"2023-11-06","checkOut":"2023-11-12","roomType":"Double","totalBookingAmount":800,"status":null},{"bookingId":"3","clientType":"Individual","clientId":"1000003","checkIn":"2023-12-01","checkOut":"2023-12-05","roomType":"Single","totalBookingAmount":450,"status":"Cancelled"},{"bookingId":"4","clientType":"Coorporativo","clientId":"1000004","checkIn":"2023-10-25","checkOut":"2023-10-28","roomType":"Double","totalBookingAmount":750,"status":"Cancelled"},{"bookingId":"5","clientType":"Individual","clientId":"1000005","checkIn":"2023-11-15","checkOut":"2023-11-20","roomType":"Single","totalBookingAmount":550,"status":null},{"bookingId":"6","clientType":"Coorporativo","clientId":"1000006","checkIn":"2023-12-10","checkOut":"2023-12-15","roomType":"Double","totalBookingAmount":900,"status":"Cancelled"},{"bookingId":"7","clientType":"Individual","clientId":"1000007","checkIn":"2023-11-25","checkOut":"2023-11-30","roomType":"Single","totalBookingAmount":600,"status":null},{"bookingId":"8","clientType":"Coorporativo","clientId":"1000008","checkIn":"2023-12-20","checkOut":"2023-12-25","roomType":"Double","totalBookingAmount":950,"status":null},{"bookingId":"9","clientType":"Coorporativo","clientId":"1000009","checkIn":"2023-10-22","checkOut":"2023-10-28","roomType":"Single","totalBookingAmount":500,"status":null},{"bookingId":"10","clientType":"Individual","clientId":"1000010","checkIn":"2023-11-10","checkOut":"2023-11-15","roomType":"Double","totalBookingAmount":750,"status":null},{"bookingId":"11","clientType":"Coorporativo","clientId":"1000011","checkIn":"2023-12-05","checkOut":"2023-12-10","roomType":"Single","totalBookingAmount":550,"status":null},{"bookingId":"12","clientType":"Individual","clientId":"1000012","checkIn":"2023-11-20","checkOut":"2023-11-25","roomType":"Double","totalBookingAmount":800,"status":null},{"bookingId":"13","clientType":"Coorporativo","clientId":"1000013","checkIn":"2023-12-15","checkOut":"2023-12-20","roomType":"Single","totalBookingAmount":600,"status":null},{"bookingId":"14","clientType":"Coorporativo","clientId":"1000014","checkIn":"2023-10-26","checkOut":"2023-10-30","roomType":"Double","totalBookingAmount":750,"status":null},{"bookingId":"15","clientType":"Individual","clientId":"1000015","checkIn":"2023-11-08","checkOut":"2023-11-12","roomType":"Single","totalBookingAmount":500,"status":null},{"bookingId":"16","clientType":"Coorporativo","clientId":"1000016","checkIn":"2023-12-03","checkOut":"2023-12-07","roomType":"Double","totalBookingAmount":800,"status":null},{"bookingId":"17","clientType":"Individual","clientId":"1000017","checkIn":"2023-11-18","checkOut":"2023-11-22","roomType":"Single","totalBookingAmount":450,"status":null},{"bookingId":"102","clientType":"Coorporativo-Dni","clientId":"1000002","checkIn":"2023-10-30","checkOut":"2023-11-05","roomType":"Single","totalBookingAmount":"1500","status":null}]
+[
+    {
+        "bookingId": "1",
+        "clientType": "Coorporativo",
+        "clientId": "1000001",
+        "checkIn": "2023-10-30",
+        "checkOut": "2023-11-05",
+        "roomType": "Single",
+        "totalBookingAmount": 3000,
+        "status": "Modificada"
+    },
+    {
+        "bookingId": "99",
+        "clientType": "Individual",
+        "clientId": "1000001",
+        "checkIn": "2023-01-30",
+        "checkOut": "2023-02-05",
+        "roomType": "Single",
+        "totalBookingAmount": 300,
+        "status": "Cancelled"
+    },
+    {
+        "bookingId": "100",
+        "clientType": "Individual",
+        "clientId": "1000001",
+        "checkIn": "2023-02-01",
+        "checkOut": "2023-02-24",
+        "roomType": "Single",
+        "totalBookingAmount": 2000,
+        "status": null
+    },
+    {
+        "bookingId": "101",
+        "clientType": "Coorporativo",
+        "clientId": "1000001",
+        "checkIn": "2023-09-25",
+        "checkOut": "2023-10-09",
+        "roomType": "Single",
+        "totalBookingAmount": 1000,
+        "status": "Cancelled"
+    },
+    {
+        "bookingId": "2",
+        "clientType": "Coorporativo",
+        "clientId": "1000002",
+        "checkIn": "2023-11-06",
+        "checkOut": "2023-11-12",
+        "roomType": "Double",
+        "totalBookingAmount": 800,
+        "status": null
+    },
+    {
+        "bookingId": "3",
+        "clientType": "Individual",
+        "clientId": "1000003",
+        "checkIn": "2023-12-01",
+        "checkOut": "2023-12-05",
+        "roomType": "Single",
+        "totalBookingAmount": 450,
+        "status": "Cancelled"
+    },
+    {
+        "bookingId": "4",
+        "clientType": "Coorporativo",
+        "clientId": "1000004",
+        "checkIn": "2023-10-25",
+        "checkOut": "2023-10-28",
+        "roomType": "Double",
+        "totalBookingAmount": 750,
+        "status": "Cancelled"
+    },
+    {
+        "bookingId": "5",
+        "clientType": "Individual",
+        "clientId": "1000005",
+        "checkIn": "2023-11-15",
+        "checkOut": "2023-11-20",
+        "roomType": "Single",
+        "totalBookingAmount": 550,
+        "status": null
+    },
+    {
+        "bookingId": "6",
+        "clientType": "Coorporativo",
+        "clientId": "1000006",
+        "checkIn": "2023-12-10",
+        "checkOut": "2023-12-15",
+        "roomType": "Double",
+        "totalBookingAmount": 900,
+        "status": "Cancelled"
+    },
+    {
+        "bookingId": "7",
+        "clientType": "Individual",
+        "clientId": "1000007",
+        "checkIn": "2023-11-25",
+        "checkOut": "2023-11-30",
+        "roomType": "Single",
+        "totalBookingAmount": 600,
+        "status": null
+    },
+    {
+        "bookingId": "8",
+        "clientType": "Coorporativo",
+        "clientId": "1000008",
+        "checkIn": "2023-12-20",
+        "checkOut": "2023-12-25",
+        "roomType": "Double",
+        "totalBookingAmount": 950,
+        "status": null
+    },
+    {
+        "bookingId": "9",
+        "clientType": "Coorporativo",
+        "clientId": "1000009",
+        "checkIn": "2023-10-22",
+        "checkOut": "2023-10-28",
+        "roomType": "Single",
+        "totalBookingAmount": 500,
+        "status": null
+    },
+    {
+        "bookingId": "10",
+        "clientType": "Individual",
+        "clientId": "1000010",
+        "checkIn": "2023-11-10",
+        "checkOut": "2023-11-15",
+        "roomType": "Double",
+        "totalBookingAmount": 750,
+        "status": null
+    },
+    {
+        "bookingId": "11",
+        "clientType": "Coorporativo",
+        "clientId": "1000011",
+        "checkIn": "2023-12-05",
+        "checkOut": "2023-12-10",
+        "roomType": "Single",
+        "totalBookingAmount": 550,
+        "status": null
+    },
+    {
+        "bookingId": "12",
+        "clientType": "Individual",
+        "clientId": "1000012",
+        "checkIn": "2023-11-20",
+        "checkOut": "2023-11-25",
+        "roomType": "Double",
+        "totalBookingAmount": 800,
+        "status": null
+    },
+    {
+        "bookingId": "13",
+        "clientType": "Coorporativo",
+        "clientId": "1000013",
+        "checkIn": "2023-12-15",
+        "checkOut": "2023-12-20",
+        "roomType": "Single",
+        "totalBookingAmount": 600,
+        "status": null
+    },
+    {
+        "bookingId": "14",
+        "clientType": "Coorporativo",
+        "clientId": "1000014",
+        "checkIn": "2023-10-26",
+        "checkOut": "2023-10-30",
+        "roomType": "Double",
+        "totalBookingAmount": 750,
+        "status": null
+    },
+    {
+        "bookingId": "15",
+        "clientType": "Individual",
+        "clientId": "1000015",
+        "checkIn": "2023-11-08",
+        "checkOut": "2023-11-12",
+        "roomType": "Single",
+        "totalBookingAmount": 500,
+        "status": null
+    },
+    {
+        "bookingId": "16",
+        "clientType": "Coorporativo",
+        "clientId": "1000016",
+        "checkIn": "2023-12-03",
+        "checkOut": "2023-12-07",
+        "roomType": "Double",
+        "totalBookingAmount": 800,
+        "status": null
+    },
+    {
+        "bookingId": "17",
+        "clientType": "Individual",
+        "clientId": "1000017",
+        "checkIn": "2023-11-18",
+        "checkOut": "2023-11-22",
+        "roomType": "Single",
+        "totalBookingAmount": 450,
+        "status": null
+    },
+    {
+        "bookingId": "102",
+        "clientType": "Coorporativo-Dni",
+        "clientId": "1000002",
+        "checkIn": "2023-10-30",
+        "checkOut": "2023-11-05",
+        "roomType": "Single",
+        "totalBookingAmount": 1500,
+        "status": null
+    }
+]

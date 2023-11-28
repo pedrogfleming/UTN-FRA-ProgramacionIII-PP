@@ -10,7 +10,7 @@ class BookingAdjustmentHistoryRepository
 
     public function __construct()
     {
-        $this->_fileName = "./ajustes.json";
+        $this->_fileName = "../ajustes.json";
         $this->_fileManager = new filesManager();
     }
 
@@ -44,7 +44,7 @@ class BookingAdjustmentHistoryRepository
     {
         if (!empty($arr)) {
             usort($arr, function ($a, $b) {
-                return $a->getId() < $b->getId();
+                return $b->getId() - $a->getId();
             });
             $ret = $arr[0]->getId();
             $ret++;

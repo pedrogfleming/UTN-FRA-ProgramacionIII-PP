@@ -21,7 +21,7 @@ class RoomController
                 $dto->checkOut = $params["checkOut"];
                 $dto->roomType = $params["roomType"];
                 $dto->totalBookingAmount = $params["totalBookingAmount"];
-    
+
                 $customerBooking = new CustomerBooking();
                 $result = $customerBooking->ReserveRoom($dto);
                 $payload = json_encode(array($result));
@@ -79,15 +79,32 @@ class RoomController
         }
     }
 
-    public function UpdateAmount($dto)
+    public function Update($request, $response, $args)
     {
         try {
-            $customerBooking = new CustomerBooking();
-            return $customerBooking->UpdateAmount($dto);
+            $params = $request->getParsedBody();
+            if (
+                isset($args["booking"]) &&
+                isset($params["adjustmentReason"]) &&
+                isset($params["amountToAdjust"])
+            ) {
+                $dto = new stdClass;
+                $dto->bookingId = $args["booking"];
+                $dto->adjustmentReason = $params["adjustmentReason"];
+                $dto->amountToAdjust = $params["amountToAdjust"];
+
+                $customerBooking = new CustomerBooking();
+                $result = $customerBooking->UpdateAmount($dto);
+                $payload = json_encode(array($result));
+                $response->getBody()->write($payload);
+                return $response->withHeader('Content-Type', 'application/json');
+            } else {
+                throw new Exception("Missing arguments on request");
+            }
         } catch (\Throwable $th) {
-            $response = new stdClass();
-            $response->err = $th->getMessage();
-            return $response;
+            $payload = json_encode(array("err" => $th->getMessage()));
+            $response->getBody()->write($payload);
+            return $response->withHeader('Content-Type', 'application/json');
         }
     }
 
