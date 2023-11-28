@@ -74,6 +74,19 @@ class DAO
             SQL;
 
             $this->PDOobject->exec($create_table_booking_changes);
+
+            $create_table_users = <<<SQL
+            CREATE TABLE IF NOT EXISTS Users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                username VARCHAR(255) NOT NULL,
+                mail VARCHAR(255) NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                role VARCHAR(255) NOT NULL,
+                isDeleted BOOLEAN DEFAULT FALSE
+            )
+            SQL;
+
+            $this->PDOobject->exec($create_table_users);
         } catch (PDOException $e) {
             throw new Exception("Connection failed: " . $e->getMessage());
         }
