@@ -24,12 +24,6 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "action",
-									"value": "ClientRegistration",
-									"description": "ClientRegistration",
-									"type": "text"
-								},
-								{
 									"key": "name",
 									"value": "Moria",
 									"type": "text"
@@ -77,12 +71,17 @@
 								{
 									"key": "userImage",
 									"type": "file",
-									"src": "/D:/Environments/XAMP/htdocs/UTN-ProgIII-PP-2023/TestingIImages/moria-casanjpg.jpg"
+									"src": "/D:/Vagrant_Environments/xampp/htdocs/UTN-FRA-ProgramacionIII-PP/TestingIImages/moria-casanjpg.jpg"
+								},
+								{
+									"key": "paymentMethod",
+									"value": "tarjeta",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/client",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -90,7 +89,7 @@
 							"port": "{{puerto}}",
 							"path": [
 								"{{path}}",
-								"index.php"
+								"client"
 							]
 						}
 					},
@@ -407,7 +406,7 @@
 								{
 									"key": "userImage",
 									"type": "file",
-									"src": "/D:/Environments/XAMP/htdocs/UTN-ProgIII-PP-2023/TestingIImages/carmen-barbier.jpg"
+									"src": "/D:/Vagrant_Environments/xampp/htdocs/UTN-FRA-ProgramacionIII-PP/TestingIImages/carmen-barbier.jpg"
 								}
 							]
 						},
@@ -676,8 +675,11 @@
 			"item": [
 				{
 					"name": "2-ConsultarCliente",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -692,22 +694,25 @@
 									"key": "action",
 									"value": "GetClient",
 									"description": "ClientRegistration",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "clientId",
-									"value": "1000003",
-									"type": "text"
+									"value": "1000001",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "clientType",
-									"value": "Individual",
-									"type": "text"
+									"value": "Coorporativo-Dni",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/client/?clientId=1000001&clientType=Coorporativo-Dni",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -715,7 +720,18 @@
 							"port": "{{puerto}}",
 							"path": [
 								"{{path}}",
-								"index.php"
+								"client",
+								""
+							],
+							"query": [
+								{
+									"key": "clientId",
+									"value": "1000001"
+								},
+								{
+									"key": "clientType",
+									"value": "Coorporativo-Dni"
+								}
 							]
 						}
 					},
@@ -985,19 +1001,13 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "action",
-									"value": "BookRoom",
-									"description": "BookRoom",
-									"type": "text"
-								},
-								{
 									"key": "clientType",
-									"value": "Coorporativo-Dni",
+									"value": "Single-Dni",
 									"type": "text"
 								},
 								{
 									"key": "clientId",
-									"value": "1000003",
+									"value": "7",
 									"type": "text"
 								},
 								{
@@ -1023,12 +1033,12 @@
 								{
 									"key": "bookingImage",
 									"type": "file",
-									"src": "/D:/Environments/XAMP/htdocs/UTN-ProgIII-PP-2023/TestingIImages/booking1.png"
+									"src": "/D:/Vagrant_Environments/xampp/htdocs/UTN-FRA-ProgramacionIII-PP/TestingIImages/marcelo-tinelli.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/booking",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -1036,7 +1046,7 @@
 							"port": "{{puerto}}",
 							"path": [
 								"{{path}}",
-								"index.php"
+								"booking"
 							]
 						}
 					},
@@ -1600,10 +1610,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"action\": \"UpdateClient\",\r\n    \"clientId\": \"1000001\",\r\n    \"name\": \"Moria\",\r\n    \"lastName\": \"Casan\",\r\n    \"documentType\": \"Dni\",\r\n    \"documentNumber\": \"0000000001\",\r\n    \"email\": \"momo-casan-modifcado@example.com\",\r\n    \"clientType\": \"Coorporativo\",\r\n    \"country\": \"Paraguay\",\r\n    \"city\": \"Asuncion\",\r\n    \"phoneNumber\": \"+541112348080\"\r\n}"
+							"raw": "{\r\n    \"name\": \"Moria\",\r\n    \"lastName\": \"Casan\",\r\n    \"documentType\": \"Dni\",\r\n    \"documentNumber\": \"1000800021\",\r\n    \"email\": \"momo-casan-modifcado@example.com\",\r\n    \"clientType\": \"Coorporativo-Dni\",\r\n    \"country\": \"Paraguay\",\r\n    \"city\": \"Asuncion\",\r\n    \"phoneNumber\": \"+541112348080\",\r\n    \"paymentMethod\": \"efectivo\"\r\n}"
 						},
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/client/10",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -1611,7 +1621,8 @@
 							"port": "{{puerto}}",
 							"path": [
 								"{{path}}",
-								"index.php"
+								"client",
+								"10"
 							]
 						}
 					},
@@ -1766,7 +1777,7 @@
 				{
 					"name": "6-Cancelar Reserva",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -1775,33 +1786,11 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "action",
-									"value": "CancelBooking",
-									"description": "BookRoom",
-									"type": "text"
-								},
-								{
-									"key": "clientId",
-									"value": "1000001",
-									"type": "text"
-								},
-								{
-									"key": "clientType",
-									"value": "Coorporativo-Dni",
-									"type": "text"
-								},
-								{
-									"key": "bookingId",
-									"value": "1",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\r\n    \"clientId\" : \"7\",\r\n    \"clientType\": \"Single-Dni\"\r\n}"
 						},
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/booking/1",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -1809,7 +1798,8 @@
 							"port": "{{puerto}}",
 							"path": [
 								"{{path}}",
-								"index.php"
+								"booking",
+								"1"
 							]
 						}
 					},
@@ -2082,7 +2072,7 @@
 				{
 					"name": "7-AjusteReserva",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -2091,32 +2081,11 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "action",
-									"value": "AdjustBookingAmount",
-									"type": "text"
-								},
-								{
-									"key": "bookingId",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "adjustmentReason",
-									"value": "\"Se robo una toalla\"",
-									"type": "text"
-								},
-								{
-									"key": "amountToAdjust",
-									"value": "3000",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\r\n    \"adjustmentReason\":\"Se robo una toalla\",\r\n    \"amountToAdjust\": 9000\r\n}"
 						},
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/booking/1",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -2124,7 +2093,8 @@
 							"port": "{{puerto}}",
 							"path": [
 								"{{path}}",
-								"index.php"
+								"booking",
+								"1"
 							]
 						}
 					},
@@ -2321,12 +2291,6 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "action",
-									"value": "ClientRegistration",
-									"description": "ClientRegistration",
-									"type": "text"
-								},
-								{
 									"key": "name",
 									"value": "Marcelo",
 									"type": "text"
@@ -2374,7 +2338,7 @@
 								{
 									"key": "userImage",
 									"type": "file",
-									"src": "/D:/Environments/XAMP/htdocs/UTN-ProgIII-PP-2023/TestingIImages/marcelo-tinelli.jpg"
+									"src": "/D:/Vagrant_Environments/xampp/htdocs/UTN-FRA-ProgramacionIII-PP/TestingIImages/marcelo-tinelli.jpg"
 								},
 								{
 									"key": "paymentMethod",
@@ -2384,7 +2348,7 @@
 							]
 						},
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/client",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -2392,7 +2356,7 @@
 							"port": "{{puerto}}",
 							"path": [
 								"{{path}}",
-								"index.php"
+								"client"
 							]
 						}
 					},
@@ -2543,10 +2507,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"action\": \"DeleteClient\",\r\n    \"clientId\": \"1000003\",\r\n    \"clientType\": \"Coorporativo-Dni-Dni\"\r\n}"
+							"raw": "{\r\n    \"clientType\": \"Coorporativo-Dni\"\r\n}"
 						},
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/client/10",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -2554,7 +2518,8 @@
 							"port": "{{puerto}}",
 							"path": [
 								"{{path}}",
-								"index.php"
+								"client",
+								"10"
 							]
 						}
 					},
@@ -2718,7 +2683,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/index.php?action=GetBookings&roomType=Todos&dateFrom=%%%&dateTo=%%%&clientId=1000001",
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/booking?roomType=Todos&dateFrom=%%%&dateTo=%%%",
 							"protocol": "{{protocolo}}",
 							"host": [
 								"{{server}}"
@@ -2726,12 +2691,13 @@
 							"port": "{{puerto}}",
 							"path": [
 								"{{path}}",
-								"index.php"
+								"booking"
 							],
 							"query": [
 								{
 									"key": "action",
-									"value": "GetBookings"
+									"value": "GetBookings",
+									"disabled": true
 								},
 								{
 									"key": "roomType",
@@ -2747,7 +2713,8 @@
 								},
 								{
 									"key": "clientId",
-									"value": "1000001"
+									"value": "1000001",
+									"disabled": true
 								},
 								{
 									"key": "onlyCanceled",
@@ -3109,6 +3076,60 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "CrearUsuario",
+			"item": [
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"user_a\",\r\n    \"password\" : \"1234\",\r\n    \"mail\" : \"test_a@gmail.com\",\r\n    \"role\" : \"role_a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/user",
+							"protocol": "{{protocolo}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"{{path}}",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:666/app/hello",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"app",
+						"hello"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -3144,12 +3165,18 @@
 		},
 		{
 			"key": "puerto",
-			"value": "80",
+			"value": "666",
 			"type": "string"
 		},
 		{
 			"key": "path",
-			"value": "UTN-ProgIII-PP-2023",
+			"value": "UTN-FRA-ProgramacionIII-PP",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "path",
+			"value": "app",
 			"type": "string"
 		}
 	]
