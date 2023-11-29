@@ -48,10 +48,12 @@ $app->group('/booking', function (RouteCollectorProxy $group) {
 
 $app->group('/user', function (RouteCollectorProxy $group) {
     $authmiddleware = new AuthenticationMiddleware();
-    $group->post('[/]', \UserController::class . ':Create')->add($authmiddleware);
+    $group->post('[/]', \UserController::class . ':Create')->add($authmiddleware)->add(new AccessLoggerMiddleware())->add(new TransactionLoggerMiddleware());
     $group->get('[/]', \UserController::class . ':Get')->add(new AuthorizationMiddleware(["recepcionista","cliente"]))->add($authmiddleware);
-    $group->put('/{user}', \UserController::class . ':Update')->add($authmiddleware);
-    $group->delete('/{user}', \UserController::class. ':Delete')->add($authmiddleware);
+    $group->put('/{user}', \UserController::class . ':Update')->add($authmiddleware)->add(new AccessLoggerMiddleware())->add(new TransactionLoggerMiddleware());
+    $group->delete('/{user}', \UserController::class. ':Delete')->add($authmiddleware)->add(new AccessLoggerMiddleware())->add(new TransactionLoggerMiddleware());
     $group->post('/login', \UserController::class . ':GenerateToken');
-})->add(new AccessLoggerMiddleware())->add(new TransactionLoggerMiddleware());
+});
+
+
 $app->run();
