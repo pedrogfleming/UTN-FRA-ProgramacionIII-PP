@@ -1,6 +1,6 @@
 <?php
 require_once("../Repositories/UserRepository.php");
-
+require_once("../Utils/JWTAuthenticator.php");
 class UserRegistration
 {
     private $_userRepository;
@@ -46,7 +46,7 @@ class UserRegistration
             $existingUser = array_filter($users, function ($user) use ($username) {
                 return $user->username == $username;
             });
-    
+
             if (!empty($existingUser)) {
                 $existingUser = array_values($existingUser)[0];
                 if (password_verify($password, $existingUser->password)) {
@@ -61,4 +61,32 @@ class UserRegistration
             throw new Exception('Username and password must be provided');
         }
     }
+    public function GenerateToken($username, $password)
+    {
+        require_once("../Models/User.php");
+        $correctPassword = $this->Login($username, $password);
+        $payload = json_encode(array('error' => 'Incorrect username or password'));
+
+        if ($correctPassword) {
+            $users = User::map($this->_userRepository->Get());
+            $existingUser = array_filter($users, function ($user) use ($username) {
+                return $user->username == $username;
+            });
+
+            if (!empty($existingUser)) {
+                $userExists = array_values($existingUser)[0];
+                $data = array(
+                    'username' => $username,
+                    'role' => $userExists->role
+                );
+                $token = JWTAuthenticator::CreateToken($data);
+                $payload = json_encode(array('jwt' => $token));
+            } else {
+                $payload = json_encode(array('error' => 'Unable to get the user: user does not exist'));
+            }
+        }
+
+        return $payload;
+    }
+    
 }

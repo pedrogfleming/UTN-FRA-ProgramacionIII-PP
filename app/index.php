@@ -14,6 +14,10 @@ require_once("../Controllers/ClientController.php");
 require_once("../Controllers/RoomController.php");
 require_once("../Controllers/UserController.php");
 
+require_once("../Middlewares/AuthenticationMiddleware.php");
+require_once("../Middlewares/AuthorizationMiddleware.php");
+require_once("../Middlewares/LoggerAccessMidleware.php");
+require_once("../Middlewares/TransactionLoggerMiddleware.php");
 require_once  '../vendor/autoload.php';
 
 $app = AppFactory::create();
@@ -22,41 +26,32 @@ $app->setBasePath('/app');
 // Add error middleware
 $app->addErrorMiddleware(true, true, true);
 
+
+$authmiddleware = new AuthenticationMiddleware();
 // Add parse body
 $app->addBodyParsingMiddleware();
 
 $app->group('/client', function (RouteCollectorProxy $group) {
-    $group->post('[/]', \ClientController::class . ':Create');
-    $group->get('[/]', \ClientController::class . ':Get');
+    $altaYborradoDeClientes = new AuthorizationMiddleware(["gerente"]);
+    $group->post('[/]', \ClientController::class . ':Create')->add($altaYborradoDeClientes);
+    $group->get('[/]', \ClientController::class . ':Get')->add(new AuthorizationMiddleware(["recepcionista","cliente"]));
     $group->put('/{client}', \ClientController::class . ':Update');
-    $group->delete('/{client}', \ClientController::class. ':Delete');
-});
+    $group->delete('/{client}', \ClientController::class. ':Delete')->add($altaYborradoDeClientes);
+})->add($authmiddleware)->add(new AccessLoggerMiddleware())->add(new TransactionLoggerMiddleware());
 
 $app->group('/booking', function (RouteCollectorProxy $group) {
-    $group->post('[/]', \RoomController::class . ':Book');
-    $group->get('[/]', \RoomController::class . ':Get');
+    $group->post('[/]', \RoomController::class . ':Book')->add(new AuthorizationMiddleware(["recepcionista"]));
+    $group->get('[/]', \RoomController::class . ':Get')->add(new AuthorizationMiddleware(["recepcionista","cliente"]));
     $group->put('/{booking}', \RoomController::class . ':Update');
     $group->delete('/{booking}', \RoomController::class. ':Delete');
-});
+})->add($authmiddleware)->add(new AccessLoggerMiddleware())->add(new TransactionLoggerMiddleware());
 
 $app->group('/user', function (RouteCollectorProxy $group) {
-    $group->post('[/]', \UserController::class . ':Create');
-    $group->get('[/]', \UserController::class . ':Get');
-    $group->put('/{user}', \UserController::class . ':Update');
-    $group->delete('/{user}', \UserController::class. ':Delete');
-});
-
-
-// $app->get('/hello', function ($request, $response, array $args) {
-//     try {
-//         require_once "../database/dao.php";
-//         $dao = DAO::getInstance();
-//         $response->getBody()->write('Funciona!');
-//         return $response;
-//     } catch (\Throwable $th) {
-//         $payload = json_encode(array("err" => $th->getMessage()));
-//         $response->getBody()->write($payload);
-//         return $response->withHeader('Content-Type', 'application/json');
-//     }
-// });
+    $authmiddleware = new AuthenticationMiddleware();
+    $group->post('[/]', \UserController::class . ':Create')->add($authmiddleware);
+    $group->get('[/]', \UserController::class . ':Get')->add(new AuthorizationMiddleware(["recepcionista","cliente"]))->add($authmiddleware);
+    $group->put('/{user}', \UserController::class . ':Update')->add($authmiddleware);
+    $group->delete('/{user}', \UserController::class. ':Delete')->add($authmiddleware);
+    $group->post('/login', \UserController::class . ':GenerateToken');
+})->add(new AccessLoggerMiddleware())->add(new TransactionLoggerMiddleware());
 $app->run();

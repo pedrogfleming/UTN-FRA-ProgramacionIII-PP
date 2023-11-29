@@ -1,7 +1,7 @@
 <?php
 require_once '../Models/User.php';
 require_once '../Utils/JWTAuthenticator.php';
-require_once '../Services/UserRegistration';
+require_once '../Services/UserRegistration.php';
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpBadRequestException;
@@ -25,7 +25,7 @@ class AuthorizationMiddleware
         $token = trim(explode("Bearer", $header)[1]);
         $userData = JWTAuthenticator::GetData($token);
 
-        $authorization = $this->isAuthorized($userData);
+        $authorization = $this->isAuthorized($userData->data);
         if ($authorization->isAuthorized) {
             return $handler->handle($request);
         } else {
@@ -42,8 +42,8 @@ class AuthorizationMiddleware
         $ret->isAuthorized = true;
         $ret->msg = "User authenticated successfully";
 
-        if ($userData->type) {
-            $authorizedRole = in_array($userData->type, $this->authorizedRoles);
+        if ($userData->role) {
+            $authorizedRole = in_array($userData->role, $this->authorizedRoles);
             if (!$authorizedRole) {
                 $ret->isAuthorized = false;
                 $ret->msg = "User does not have sufficient permissions to perform the action";

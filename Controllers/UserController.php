@@ -93,4 +93,19 @@ class UserController
             return $response->withHeader('Content-Type', 'application/json');
         }
     }
+
+    public function GenerateToken($request, $response, $args)
+    {
+        require_once("../Services/UserRegistration.php");
+        $parameters = $request->getParsedBody();
+        $userRegistration =  new UserRegistration();
+        $username = $parameters['username'];
+        $password = $parameters['password'];
+    
+        $payload = $userRegistration->GenerateToken($username, $password);
+    
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+    
 }

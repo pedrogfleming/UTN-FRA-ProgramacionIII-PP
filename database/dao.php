@@ -93,8 +93,7 @@ class DAO
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 resource VARCHAR(255) NOT NULL,
                 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                userId INT NOT NULL,
-                FOREIGN KEY (userId) REFERENCES Users(id)
+                username VARCHAR(255) NOT NULL
             )
             SQL;
             $this->PDOobject->exec($create_table_access_logs);
@@ -103,11 +102,10 @@ class DAO
             CREATE TABLE IF NOT EXISTS Transactions (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                user INT NOT NULL,
+                username VARCHAR(255) NOT NULL,
                 requestBody TEXT,
                 requestQueryParams TEXT,
-                responseBody TEXT,
-                FOREIGN KEY (user) REFERENCES Users(id)
+                responseBody TEXT
             )
             SQL;
             $this->PDOobject->exec($create_table_transaction_logs);

@@ -3078,7 +3078,7 @@
 			]
 		},
 		{
-			"name": "CrearUsuario",
+			"name": "E-a-CrearUsuario",
 			"item": [
 				{
 					"name": "Crear Usuario",
@@ -3087,7 +3087,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"user_a\",\r\n    \"password\" : \"1234\",\r\n    \"mail\" : \"test_a@gmail.com\",\r\n    \"role\" : \"role_a\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"pedro_fleming\",\r\n    \"password\" : \"1234Pedro\",\r\n    \"mail\" : \"pedro_fleming@gmail.com\",\r\n    \"role\" : \"gerente\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3104,6 +3104,179 @@
 							"path": [
 								"{{path}}",
 								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Creacion Usuario gerente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\" : \"pedro_fleming\",\r\n    \"password\" : \"1234Pedro\",\r\n    \"mail\" : \"pedro_fleming@gmail.com\",\r\n    \"role\" : \"gerente\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/user",
+									"protocol": "{{protocolo}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{puerto}}",
+									"path": [
+										"{{path}}",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:666"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Nov 2023 22:11:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    [\n        {\n            \"username\": \"pedro_fleming\",\n            \"id\": 2\n        }\n    ]\n]"
+						}
+					]
+				},
+				{
+					"name": "Modificar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"user_a\",\r\n    \"password\" : \"1239\",\r\n    \"mail\" : \"test_a_1@gmail.com\",\r\n    \"role\" : \"cliente\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/user/1",
+							"protocol": "{{protocolo}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"{{path}}",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Modificar Usuario",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\" : \"user_a\",\r\n    \"password\" : \"1239\",\r\n    \"mail\" : \"test_a_1@gmail.com\",\r\n    \"role\" : \"cliente\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/user/1",
+									"protocol": "{{protocolo}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{puerto}}",
+									"path": [
+										"{{path}}",
+										"user",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:666"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 28 Nov 2023 22:12:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"username\": \"user_a\",\n        \"mail\": \"test_a_1@gmail.com\",\n        \"password\": \"1239\",\n        \"role\": \"cliente\",\n        \"isDeleted\": 0\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Eliminar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"user_a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/user/1",
+							"protocol": "{{protocolo}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"{{path}}",
+								"user",
+								"1"
 							]
 						}
 					},
@@ -3130,6 +3303,92 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Login- GenerarToken",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"pedro_fleming\",\r\n    \"password\" : \"1234Pedro\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/user/login",
+					"protocol": "{{protocolo}}",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"{{path}}",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Creacion Usuario gerente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"pedro_fleming\",\r\n    \"password\" : \"1234Pedro\",\r\n    \"mail\" : \"pedro_fleming@gmail.com\",\r\n    \"role\" : \"gerente\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocolo}}://{{server}}:{{puerto}}/{{path}}/user",
+							"protocol": "{{protocolo}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"{{path}}",
+								"user"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:666"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 28 Nov 2023 22:11:49 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    [\n        {\n            \"username\": \"pedro_fleming\",\n            \"id\": 2\n        }\n    ]\n]"
+				}
+			]
 		}
 	],
 	"event": [
